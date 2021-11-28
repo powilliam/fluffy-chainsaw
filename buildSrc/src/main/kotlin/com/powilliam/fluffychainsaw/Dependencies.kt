@@ -28,6 +28,13 @@ object Dependencies {
             const val viewModelCompose =
                 "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycleVersion}"
         }
+
+        object Hilt {
+            const val plugin =
+                "com.google.dagger:hilt-android-gradle-plugin:${Versions.hiltVersion}"
+            const val hilt = "com.google.dagger:hilt-android:${Versions.hiltVersion}"
+            const val kapt = "com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}"
+        }
     }
 
     object Google {

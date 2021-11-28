@@ -4,6 +4,8 @@ import com.powilliam.fluffychainsaw.Versions
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -63,8 +65,15 @@ dependencies {
 
     implementation(Dependencies.AndroidX.Lifecycle.viewModelCompose)
 
+    implementation(Dependencies.AndroidX.Hilt.hilt)
+    kapt(Dependencies.AndroidX.Hilt.kapt)
+
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.AndroidX.test)
     androidTestImplementation(Dependencies.AndroidX.espresso)
     androidTestImplementation(Dependencies.AndroidX.Compose.test)
+}
+
+kapt {
+    correctErrorTypes = true
 }
