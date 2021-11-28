@@ -66,7 +66,10 @@ dependencies {
     implementation(Dependencies.AndroidX.Lifecycle.viewModelCompose)
 
     implementation(Dependencies.AndroidX.Hilt.hilt)
+    implementation(Dependencies.AndroidX.Hilt.navigationCompose)
     kapt(Dependencies.AndroidX.Hilt.kapt)
+
+    implementation(Dependencies.AndroidX.Navigation.compose)
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.AndroidX.test)

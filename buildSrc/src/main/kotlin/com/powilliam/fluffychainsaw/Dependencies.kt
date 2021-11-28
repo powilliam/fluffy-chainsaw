@@ -33,7 +33,12 @@ object Dependencies {
             const val plugin =
                 "com.google.dagger:hilt-android-gradle-plugin:${Versions.hiltVersion}"
             const val hilt = "com.google.dagger:hilt-android:${Versions.hiltVersion}"
+            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
             const val kapt = "com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}"
+        }
+
+        object Navigation {
+            const val compose = "androidx.navigation:navigation-compose:2.4.0-beta02"
         }
     }
 
