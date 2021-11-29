@@ -9,7 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,13 +25,17 @@ fun ExpensesList(
     expenses: List<Expense> = emptyList(),
     onNavigateToManageExpense: (Expense) -> Unit = {}
 ) {
-    val expensesByType = expenses.groupBy { expense -> expense.type }
-    val hasMoreThanOneTypeOfExpense = expensesByType.keys.size > 1
+    val expensesByType by rememberUpdatedState(expenses.groupBy { expense -> expense.type })
+    val hasMoreThanOneTypeOfExpense by remember {
+        derivedStateOf {
+            expensesByType.keys.size > 1
+        }
+    }
 
     LazyColumn {
         expensesByType.forEach { expenseByType ->
             if (hasMoreThanOneTypeOfExpense) {
-                stickyHeader({ expenseByType.key }) {
+                stickyHeader(expenseByType.key) {
                     ExpenseListStickyHeader {
                         val id = when (expenseByType.key) {
                             ExpenseType.Fixed -> R.string.expense_type_fixed
