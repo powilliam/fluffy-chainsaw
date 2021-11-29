@@ -19,6 +19,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true",
+                    "room.expandProject" to "true"
+                )
+            }
+        }
     }
 
     buildFeatures {
@@ -75,7 +85,12 @@ dependencies {
     implementation(Dependencies.Accompanist.insets)
     implementation(Dependencies.Accompanist.insetsUi)
 
+    implementation(Dependencies.AndroidX.Room.room)
+    implementation(Dependencies.AndroidX.Room.ktx)
+    kapt(Dependencies.AndroidX.Room.kapt)
+
     testImplementation(Dependencies.junit)
+    testImplementation(Dependencies.AndroidX.Room.test)
     androidTestImplementation(Dependencies.AndroidX.test)
     androidTestImplementation(Dependencies.AndroidX.espresso)
     androidTestImplementation(Dependencies.AndroidX.Compose.test)

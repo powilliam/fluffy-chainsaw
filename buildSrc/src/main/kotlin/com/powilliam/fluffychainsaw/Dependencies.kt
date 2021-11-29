@@ -40,6 +40,13 @@ object Dependencies {
         object Navigation {
             const val compose = "androidx.navigation:navigation-compose:2.4.0-beta02"
         }
+
+        object Room {
+            const val room = "androidx.room:room-runtime:${Versions.roomVersion}"
+            const val ktx = "androidx.room:room-ktx:${Versions.roomVersion}"
+            const val kapt = "androidx.room:room-compiler:${Versions.roomVersion}"
+            const val test = "androidx.room:room-testing:${Versions.roomVersion}"
+        }
     }
 
     object Google {
@@ -49,7 +56,9 @@ object Dependencies {
     object Accompanist {
         const val navigationMaterial =
             "com.google.accompanist:accompanist-navigation-material:${Versions.accompanistVersion}"
-        const val insets = "com.google.accompanist:accompanist-insets:${Versions.accompanistVersion}"
-        const val insetsUi = "com.google.accompanist:accompanist-insets-ui:${Versions.accompanistVersion}"
+        const val insets =
+            "com.google.accompanist:accompanist-insets:${Versions.accompanistVersion}"
+        const val insetsUi =
+            "com.google.accompanist:accompanist-insets-ui:${Versions.accompanistVersion}"
     }
 }
