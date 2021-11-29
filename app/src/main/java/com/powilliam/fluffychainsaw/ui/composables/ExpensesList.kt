@@ -2,10 +2,7 @@ package com.powilliam.fluffychainsaw.ui.composables
 
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -26,17 +23,20 @@ import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 @Composable
 fun ExpensesList(expenses: List<Expense> = emptyList()) {
     val expensesByType = expenses.groupBy { expense -> expense.type }
+    val hasMoreThanOneTypeOfExpense = expensesByType.keys.size > 1
 
     LazyColumn {
         expensesByType.forEach { expenseByType ->
-            stickyHeader {
-                ExpenseListStickyHeader {
-                    val id = when (expenseByType.key) {
-                        ExpenseType.Fixed -> R.string.expense_type_fixed
-                        else -> R.string.expense_type_variable
-                    }
+            if (hasMoreThanOneTypeOfExpense) {
+                stickyHeader({ expenseByType.key }) {
+                    ExpenseListStickyHeader {
+                        val id = when (expenseByType.key) {
+                            ExpenseType.Fixed -> R.string.expense_type_fixed
+                            else -> R.string.expense_type_variable
+                        }
 
-                    Text(text = stringResource(id))
+                        Text(text = stringResource(id))
+                    }
                 }
             }
 
@@ -94,6 +94,33 @@ private fun ExpensesListPreview() {
                     type = ExpenseType.Variable
                 )
             ),
+        )
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun ExpensesListWithOneTypeOfExpensePreview() {
+    FluffyChainsawTheme {
+        ExpensesList(
+            listOf(
+                Expense(
+                    name = "Disney+",
+                    cost = 20.99F,
+                    type = ExpenseType.Fixed
+                ),
+                Expense(
+                    name = "HBO Max",
+                    cost = 29.99F,
+                    type = ExpenseType.Fixed
+                ),
+                Expense(
+                    name = "Therapy",
+                    cost = 180F,
+                    type = ExpenseType.Fixed
+                ),
+            )
         )
     }
 }
