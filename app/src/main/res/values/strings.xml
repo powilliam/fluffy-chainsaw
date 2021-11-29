@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Fluffy Chainsaw</string>
+    <string name="app_name" translatable="false">Fluffy Chainsaw</string>
+    <string name="expenses_screen_title">Expenses</string>
 </resources>

@@ -5,14 +5,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.powilliam.fluffychainsaw.R
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpensesScreen() {
     Scaffold {
-        Text(text = "Expenses")
+        Text(text = stringResource(R.string.expenses_screen_title))
     }
 }
 
