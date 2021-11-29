@@ -66,7 +66,6 @@ fun ContainedTextField(
 }
 
 @Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ContainedTextFieldPreview() {
     FluffyChainsawTheme {

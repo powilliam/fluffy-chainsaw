@@ -83,7 +83,6 @@ fun <T> SingleOptionSelection(
 }
 
 @Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun SingleOptionSelectionPreview() {
     val options = listOf(

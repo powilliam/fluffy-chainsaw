@@ -76,7 +76,6 @@ private fun ExpenseListStickyHeader(
 }
 
 @Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ExpensesListPreview() {
     FluffyChainsawTheme {
@@ -108,7 +107,6 @@ private fun ExpensesListPreview() {
 }
 
 @Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ExpensesListWithOneTypeOfExpensePreview() {
     FluffyChainsawTheme {

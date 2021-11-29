@@ -67,7 +67,6 @@ fun ExpenseCard(
 }
 
 @Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ExpenseCardPreview() {
     FluffyChainsawTheme {
