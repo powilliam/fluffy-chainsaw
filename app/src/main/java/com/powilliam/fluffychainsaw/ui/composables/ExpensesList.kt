@@ -68,7 +68,7 @@ private fun ExpenseListStickyHeader(
         ) {
             ProvideTextStyle(
                 MaterialTheme.typography.labelLarge.copy(
-                    color = MaterialTheme.colorScheme.tertiary.copy(
+                    color = MaterialTheme.colorScheme.primary.copy(
                         alpha = 0.8F
                     )
                 )
