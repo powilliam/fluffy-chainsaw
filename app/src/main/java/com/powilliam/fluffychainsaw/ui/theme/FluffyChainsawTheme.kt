@@ -1,9 +1,12 @@
 package com.powilliam.fluffychainsaw.ui.theme
 
 import android.os.Build
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
 
 @Composable
@@ -13,6 +16,7 @@ fun FluffyChainsawTheme(
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
+    val indication = rememberRipple()
     val colorScheme = when {
         isDark and isDynamicColorSchemeSupported -> dynamicDarkColorScheme(context)
         !isDark and isDynamicColorSchemeSupported -> dynamicLightColorScheme(context)
@@ -20,5 +24,9 @@ fun FluffyChainsawTheme(
         else -> lightColorScheme()
     }
 
-    MaterialTheme(colorScheme, NotoSansTypography, content = content)
+    MaterialTheme(colorScheme, NotoSansTypography) {
+        CompositionLocalProvider(LocalIndication provides indication) {
+            content()
+        }
+    }
 }
