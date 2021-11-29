@@ -1,6 +1,5 @@
 package com.powilliam.fluffychainsaw.ui.screens
 
-import android.content.res.Configuration
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.material3.*

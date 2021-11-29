@@ -1,6 +1,5 @@
 package com.powilliam.fluffychainsaw.ui.composables
 
-import android.content.res.Configuration
 import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

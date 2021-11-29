@@ -1,6 +1,5 @@
 package com.powilliam.fluffychainsaw.ui.bottomsheets
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
