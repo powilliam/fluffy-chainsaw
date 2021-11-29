@@ -8,36 +8,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.powilliam.fluffychainsaw.R
 import com.powilliam.fluffychainsaw.data.entities.Expense
-import com.powilliam.fluffychainsaw.data.entities.ExpenseType
 import com.powilliam.fluffychainsaw.ui.composables.ExpensesList
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
-
-val expenses = listOf(
-    Expense(
-        name = "Disney+",
-        cost = 20.99F,
-        type = ExpenseType.Fixed
-    ),
-    Expense(
-        name = "HBO Max",
-        cost = 29.99F,
-        type = ExpenseType.Fixed
-    ),
-    Expense(
-        name = "Therapy",
-        cost = 180F,
-        type = ExpenseType.Fixed
-    ),
-    Expense(
-        name = "FarCry 5",
-        cost = 40F,
-        type = ExpenseType.Variable
-    )
-)
+import com.powilliam.fluffychainsaw.ui.viewmodels.ExpensesUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpensesScreen(
+    uiState: ExpensesUiState = ExpensesUiState(),
     onNavigateToManageExpense: (Expense?) -> Unit = {}
 ) {
     Scaffold(
@@ -50,7 +28,7 @@ fun ExpensesScreen(
             }
         }
     ) {
-        ExpensesList(expenses) { expense ->
+        ExpensesList(uiState.expenses) { expense ->
             onNavigateToManageExpense(expense)
         }
     }
