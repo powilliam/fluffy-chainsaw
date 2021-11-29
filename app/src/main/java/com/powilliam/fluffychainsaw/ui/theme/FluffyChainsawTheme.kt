@@ -20,5 +20,5 @@ fun FluffyChainsawTheme(
         else -> lightColorScheme()
     }
 
-    MaterialTheme(colorScheme, content = content)
+    MaterialTheme(colorScheme, NotoSansTypography, content = content)
 }
