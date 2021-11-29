@@ -13,7 +13,7 @@ sealed class ManageExpenseViewMode(val alias: String) {
 sealed class Screen(val route: String, val arguments: List<NamedNavArgument> = emptyList()) {
     object Expenses : Screen("/expenses")
     object ManageExpense : Screen(
-        "/manage-expense/{mode}/{id}",
+        "/manage-expense?viewMode={viewMode}&expenseId={expenseId}",
         listOf(
             navArgument("viewMode") {
                 defaultValue = ManageExpenseViewMode.InsertingOne.alias
@@ -26,15 +26,15 @@ sealed class Screen(val route: String, val arguments: List<NamedNavArgument> = e
         )
     ) {
         fun navigate(expense: Expense?): String {
-            val viewMode = if (expense != null) {
+            val viewMode = if (expense == null) {
                 ManageExpenseViewMode.InsertingOne
             } else {
                 ManageExpenseViewMode.ViewingOne
             }
 
             return ManageExpense.route
-                .replace("viewMode", viewMode.alias)
-                .replace("expenseId", "${expense?.expenseId ?: 0}")
+                .replace("{viewMode}", viewMode.alias)
+                .replace("{expenseId}", "${expense?.expenseId ?: 0}")
         }
     }
 }

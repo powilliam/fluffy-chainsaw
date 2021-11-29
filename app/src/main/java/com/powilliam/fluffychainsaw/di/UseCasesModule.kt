@@ -1,9 +1,6 @@
 package com.powilliam.fluffychainsaw.di
 
-import com.powilliam.fluffychainsaw.data.usecases.GetAllExpensesUseCase
-import com.powilliam.fluffychainsaw.data.usecases.GetAllExpensesUseCaseImpl
-import com.powilliam.fluffychainsaw.data.usecases.InsertManyExpensesUseCase
-import com.powilliam.fluffychainsaw.data.usecases.InsertManyExpensesUseCaseImpl
+import com.powilliam.fluffychainsaw.data.usecases.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -18,6 +15,12 @@ abstract class UseCasesModule {
     abstract fun bindGetAllExpensesUseCase(
         getAllExpensesUseCaseImpl: GetAllExpensesUseCaseImpl
     ): GetAllExpensesUseCase
+
+    @ViewModelScoped
+    @Binds
+    abstract fun bindGetOneExpenseUseCase(
+        getOneExpenseUseCaseImpl: GetOneExpenseUseCaseImpl
+    ): GetOneExpenseUseCase
 
     @ViewModelScoped
     @Binds

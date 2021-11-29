@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.powilliam.fluffychainsaw.data.entities.Expense
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
+import com.powilliam.fluffychainsaw.data.usecases.GetOneExpenseUseCase
 import com.powilliam.fluffychainsaw.data.usecases.InsertManyExpensesUseCase
 import com.powilliam.fluffychainsaw.ui.constants.ManageExpenseViewMode
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,8 @@ data class ManageExpenseUiState(
 
 @HiltViewModel
 class ManageExpenseViewModel @Inject constructor(
-    private val insertManyExpensesUseCase: InsertManyExpensesUseCase
+    private val getOneExpenseUseCase: GetOneExpenseUseCase,
+    private val insertManyExpensesUseCase: InsertManyExpensesUseCase,
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<ManageExpenseUiState> = MutableStateFlow(
         ManageExpenseUiState()
@@ -41,8 +43,17 @@ class ManageExpenseViewModel @Inject constructor(
 
     fun onSetUiStateBasedOnViewMode(viewMode: String?, expenseId: Long?) {
         when {
-            // TODO: Get from database and set values to state
-            isViewingOne(viewMode, expenseId) -> {}
+            isViewingOne(viewMode, expenseId) -> viewModelScope.launch {
+                val expense = getOneExpenseUseCase.execute(expenseId!!)
+                _uiState.emit(
+                    ManageExpenseUiState(
+                        name = expense.name,
+                        cost = "${expense.cost}",
+                        type = expense.type,
+                        viewMode = ManageExpenseViewMode.ViewingOne
+                    )
+                )
+            }
             else -> {}
         }
     }

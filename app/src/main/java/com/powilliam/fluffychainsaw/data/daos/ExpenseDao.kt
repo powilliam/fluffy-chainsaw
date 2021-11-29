@@ -11,6 +11,9 @@ interface ExpenseDao {
     @Query("SELECT * FROM Expense")
     fun getAllExpenses(): Flow<List<Expense>>
 
+    @Query("SELECT * FROM Expense WHERE expenseId == :id")
+    suspend fun getOneExpense(id: Long): Expense
+
     @Insert
     suspend fun insertManyExpenses(vararg expense: Expense)
 }
