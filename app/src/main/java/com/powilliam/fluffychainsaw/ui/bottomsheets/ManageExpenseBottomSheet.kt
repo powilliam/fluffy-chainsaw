@@ -57,11 +57,8 @@ fun ManageExpenseBottomSheet(
                 ),
                 onValueChange = {}
             )
-            Spacer(modifier.height(24.dp))
+            Spacer(modifier.height(16.dp))
             SingleOptionSelection(
-                label = {
-                    Text(text = stringResource(R.string.manage_expense_type_label))
-                },
                 options = listOf(
                     Option(
                         label = stringResource(R.string.expense_type_fixed),
@@ -73,7 +70,7 @@ fun ManageExpenseBottomSheet(
                     )
                 )
             ) {}
-            Spacer(modifier.height(24.dp))
+            Spacer(modifier.height(16.dp))
             Row(
                 modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
