@@ -57,11 +57,7 @@ fun <T> SingleOptionSelection(
 
                         Text(
                             text = option.label,
-                            style = MaterialTheme.typography.bodyLarge.copy(
-                                color = MaterialTheme.colorScheme.onSurface.copy(
-                                    alpha = 0.8F
-                                )
-                            )
+                            style = MaterialTheme.typography.bodyLarge
                         )
 
                         AnimatedContent(
