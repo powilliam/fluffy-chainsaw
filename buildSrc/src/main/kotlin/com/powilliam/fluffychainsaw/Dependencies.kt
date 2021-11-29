@@ -49,5 +49,7 @@ object Dependencies {
     object Accompanist {
         const val navigationMaterial =
             "com.google.accompanist:accompanist-navigation-material:${Versions.accompanistVersion}"
+        const val insets = "com.google.accompanist:accompanist-insets:${Versions.accompanistVersion}"
+        const val insetsUi = "com.google.accompanist:accompanist-insets-ui:${Versions.accompanistVersion}"
     }
 }

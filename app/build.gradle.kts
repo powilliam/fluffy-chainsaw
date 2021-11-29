@@ -72,6 +72,8 @@ dependencies {
     implementation(Dependencies.AndroidX.Navigation.compose)
 
     implementation(Dependencies.Accompanist.navigationMaterial)
+    implementation(Dependencies.Accompanist.insets)
+    implementation(Dependencies.Accompanist.insetsUi)
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.AndroidX.test)
