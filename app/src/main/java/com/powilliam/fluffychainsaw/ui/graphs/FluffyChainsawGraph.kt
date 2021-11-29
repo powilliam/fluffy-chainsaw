@@ -3,6 +3,7 @@ package com.powilliam.fluffychainsaw.ui.graphs
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -20,6 +21,8 @@ import com.powilliam.fluffychainsaw.ui.bottomsheets.ManageExpenseBottomSheet
 import com.powilliam.fluffychainsaw.ui.constants.Screen
 import com.powilliam.fluffychainsaw.ui.screens.ExpensesScreen
 import com.powilliam.fluffychainsaw.ui.viewmodels.ExpensesViewModel
+import com.powilliam.fluffychainsaw.ui.viewmodels.ManageExpenseViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
@@ -50,16 +53,35 @@ private fun NavGraphBuilder.screens(
         val viewModel = hiltViewModel<ExpensesViewModel>()
         val uiState by viewModel.uiState.collectAsState()
 
-        ExpensesScreen(uiState) {
-            navController.navigate(Screen.ManageExpense.route)
+        ExpensesScreen(uiState) { expense ->
+            navController.navigate(Screen.ManageExpense.navigate(expense))
         }
     }
 }
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 private fun NavGraphBuilder.bottomSheets(navController: NavHostController) {
-    bottomSheet(Screen.ManageExpense.route, Screen.Expenses.arguments) {
-        ManageExpenseBottomSheet(onCancel = navController::popBackStack) {
+    bottomSheet(Screen.ManageExpense.route, Screen.ManageExpense.arguments) { navBackStackEntry ->
+        val viewMode = navBackStackEntry.arguments?.getString("viewMode")
+        val expenseId = navBackStackEntry.arguments?.getLong("expenseId")
+
+        val viewModel = hiltViewModel<ManageExpenseViewModel>()
+        val uiState by viewModel.uiState.collectAsState()
+
+        LaunchedEffect(viewMode, expenseId) {
+            launch {
+                viewModel.onSetUiStateBasedOnViewMode(viewMode, expenseId)
+            }
+        }
+
+        ManageExpenseBottomSheet(
+            uiState = uiState,
+            onChangeName = viewModel::onChangeName,
+            onChangeCost = viewModel::onChangeCost,
+            onChangeType = viewModel::onChangeType,
+            onCancel = navController::popBackStack
+        ) {
+            viewModel.onInsertOrUpdate()
             navController.popBackStack()
         }
     }

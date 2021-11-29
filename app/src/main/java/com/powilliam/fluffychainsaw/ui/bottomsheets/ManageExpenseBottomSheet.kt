@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
@@ -19,19 +19,28 @@ import com.powilliam.fluffychainsaw.R
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
 import com.powilliam.fluffychainsaw.ui.composables.Option
 import com.powilliam.fluffychainsaw.ui.composables.SingleOptionSelection
+import com.powilliam.fluffychainsaw.ui.viewmodels.ManageExpenseUiState
 
 @Composable
 fun ManageExpenseBottomSheet(
     modifier: Modifier = Modifier,
+    uiState: ManageExpenseUiState = ManageExpenseUiState(),
+    onChangeName: (String) -> Unit = {},
+    onChangeCost: (String) -> Unit = {},
+    onChangeType: (ExpenseType) -> Unit = {},
     onCancel: () -> Unit = {},
     onDone: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
 
+    val canSubmit by derivedStateOf {
+        listOf(uiState.name, uiState.cost).all { field -> field.isNotEmpty() }
+    }
+
     Surface(modifier.fillMaxWidth()) {
         Column(modifier.padding(16.dp)) {
             ContainedTextField(
-                value = "",
+                value = uiState.name,
                 placeholder = stringResource(R.string.manage_expense_name_placeholder),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
@@ -41,34 +50,41 @@ fun ManageExpenseBottomSheet(
                         focusManager.moveFocus(FocusDirection.Down)
                     }
                 ),
-                onValueChange = {}
+                onValueChange = onChangeName
             )
             Spacer(modifier.height(16.dp))
             ContainedTextField(
-                value = "",
+                value = uiState.cost,
                 placeholder = stringResource(R.string.manage_expense_cost_placeholder),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(
-                    onDone = { onDone() }
+                    onDone = {
+                        if (canSubmit) {
+                            onDone()
+                        }
+                    }
                 ),
-                onValueChange = {}
+                onValueChange = onChangeCost
             )
             Spacer(modifier.height(16.dp))
             SingleOptionSelection(
+                selectedOption = uiState.type,
                 options = listOf(
+                    Option(
+                        label = stringResource(R.string.expense_type_variable),
+                        value = ExpenseType.Variable
+                    ),
                     Option(
                         label = stringResource(R.string.expense_type_fixed),
                         value = ExpenseType.Fixed
                     ),
-                    Option(
-                        label = stringResource(R.string.expense_type_variable),
-                        value = ExpenseType.Variable
-                    )
                 )
-            ) {}
+            ) { option ->
+                onChangeType(option.value)
+            }
             Spacer(modifier.height(16.dp))
             Row(
                 modifier.fillMaxWidth(),
@@ -78,7 +94,14 @@ fun ManageExpenseBottomSheet(
                     Text(text = stringResource(R.string.manage_expense_cancel_button))
                 }
                 Spacer(modifier.width(8.dp))
-                FilledTonalButton(onClick = onDone) {
+                FilledTonalButton(
+                    enabled = canSubmit,
+                    onClick = {
+                        if (canSubmit) {
+                            onDone()
+                        }
+                    }
+                ) {
                     Text(text = stringResource(R.string.manage_expense_done_button))
                 }
             }

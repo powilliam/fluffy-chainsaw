@@ -25,7 +25,7 @@ data class Option<T>(val label: String, val value: T)
 fun <T> SingleOptionSelection(
     modifier: Modifier = Modifier,
     label: (@Composable () -> Unit)? = null,
-    selectedOption: Option<T>? = null,
+    selectedOption: T? = null,
     options: List<Option<T>> = emptyList(),
     onSelectOne: (Option<T>) -> Unit,
 ) {
@@ -49,7 +49,7 @@ fun <T> SingleOptionSelection(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        val icon = if (selectedOption == option) {
+                        val icon = if (selectedOption == option.value) {
                             Icons.Rounded.RadioButtonChecked
                         } else {
                             Icons.Rounded.RadioButtonUnchecked
@@ -86,7 +86,7 @@ private fun SingleOptionSelectionPreview() {
     )
 
     val (option, optionSet) = remember {
-        mutableStateOf(options.first())
+        mutableStateOf(options.first().value)
     }
 
     FluffyChainsawTheme {
@@ -102,7 +102,7 @@ private fun SingleOptionSelectionPreview() {
                 options = options,
                 selectedOption = option
             ) { selected ->
-                optionSet(selected)
+                optionSet(selected.value)
             }
         }
     }
