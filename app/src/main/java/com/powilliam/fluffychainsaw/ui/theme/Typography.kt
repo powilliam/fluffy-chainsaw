@@ -12,7 +12,8 @@ import com.powilliam.fluffychainsaw.R
 
 private val NotoSansFontFamily = FontFamily(
     Font(R.font.notosans_regular, FontWeight.Normal),
-    Font(R.font.notosans_bold, FontWeight.Medium),
+    Font(R.font.notosans_medium, FontWeight.Medium),
+    Font(R.font.notosans_bold, FontWeight.Bold),
 )
 
 @OptIn(ExperimentalUnitApi::class)
