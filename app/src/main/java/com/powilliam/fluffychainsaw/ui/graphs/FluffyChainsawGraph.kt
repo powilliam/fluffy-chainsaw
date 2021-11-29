@@ -4,6 +4,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -28,7 +29,8 @@ fun FluffyChainsawGraph(
         modifier.navigationBarsWithImePadding(),
         sheetBackgroundColor = MaterialTheme.colorScheme.surface,
         sheetShape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
-        sheetElevation = 0.dp
+        sheetElevation = 12.dp,
+        scrimColor = Color.Transparent
     ) {
         NavHost(navController, startDestination = Screen.Expenses.route) {
             screens(navController)
