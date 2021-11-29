@@ -1,10 +1,9 @@
 package com.powilliam.fluffychainsaw.ui.screens
 
 import android.content.res.Configuration
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LargeTopAppBar
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AttachMoney
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,11 +38,22 @@ val expenses = listOf(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExpensesScreen() {
+fun ExpensesScreen(
+    onNavigateToManageExpense: (Expense?) -> Unit = {}
+) {
     Scaffold(
         topBar = { ExpensesScreenAppBar() },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { onNavigateToManageExpense(null) }
+            ) {
+                Icon(imageVector = Icons.Rounded.AttachMoney, contentDescription = null)
+            }
+        }
     ) {
-        ExpensesList(expenses)
+        ExpensesList(expenses) { expense ->
+            onNavigateToManageExpense(expense)
+        }
     }
 }
 

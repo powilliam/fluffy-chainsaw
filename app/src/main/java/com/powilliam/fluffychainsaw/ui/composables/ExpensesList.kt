@@ -21,7 +21,10 @@ import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ExpensesList(expenses: List<Expense> = emptyList()) {
+fun ExpensesList(
+    expenses: List<Expense> = emptyList(),
+    onNavigateToManageExpense: (Expense) -> Unit = {}
+) {
     val expensesByType = expenses.groupBy { expense -> expense.type }
     val hasMoreThanOneTypeOfExpense = expensesByType.keys.size > 1
 
@@ -42,7 +45,9 @@ fun ExpensesList(expenses: List<Expense> = emptyList()) {
 
             // TODO: Key should return an id
             items(expenseByType.value, key = { expense -> expense.name }) { expense ->
-                ExpenseCard(expense = expense)
+                ExpenseCard(expense = expense) {
+                    onNavigateToManageExpense(expense)
+                }
             }
         }
     }
