@@ -1,3 +1,8 @@
 package com.powilliam.fluffychainsaw.data.entities
 
-data class Expense()
+enum class ExpenseType {
+    Fixed,
+    Variable
+}
+
+data class Expense(val name: String, val cost: Float, val type: ExpenseType)

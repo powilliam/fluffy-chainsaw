@@ -1,7 +1,6 @@
 package com.powilliam.fluffychainsaw.ui.screens
 
 import android.content.res.Configuration
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
@@ -10,15 +9,42 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.powilliam.fluffychainsaw.R
+import com.powilliam.fluffychainsaw.data.entities.Expense
+import com.powilliam.fluffychainsaw.data.entities.ExpenseType
+import com.powilliam.fluffychainsaw.ui.composables.ExpensesList
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
+
+val expenses = listOf(
+    Expense(
+        name = "Disney+",
+        cost = 20.99F,
+        type = ExpenseType.Fixed
+    ),
+    Expense(
+        name = "HBO Max",
+        cost = 29.99F,
+        type = ExpenseType.Fixed
+    ),
+    Expense(
+        name = "Therapy",
+        cost = 180F,
+        type = ExpenseType.Fixed
+    ),
+    Expense(
+        name = "FarCry 5",
+        cost = 40F,
+        type = ExpenseType.Variable
+    )
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpensesScreen() {
     Scaffold(
         topBar = { ExpensesScreenAppBar() },
-        content = {}
-    )
+    ) {
+        ExpensesList(expenses)
+    }
 }
 
 @Composable

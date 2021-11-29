@@ -1,3 +1,5 @@
 <resources>
     <string name="expenses_screen_title">Despesas</string>
+    <string name="expense_type_fixed">Fixa</string>
+    <string name="expense_type_variable">Variável</string>
 </resources>
