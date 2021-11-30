@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.powilliam.fluffychainsaw.data.entities.Expense
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
+import com.powilliam.fluffychainsaw.data.usecases.DeleteOneExpenseUseCase
 import com.powilliam.fluffychainsaw.data.usecases.GetOneExpenseUseCase
 import com.powilliam.fluffychainsaw.data.usecases.InsertManyExpensesUseCase
 import com.powilliam.fluffychainsaw.data.usecases.UpdateOneExpenseUseCase
@@ -27,6 +28,7 @@ class ManageExpenseViewModel @Inject constructor(
     private val getOneExpenseUseCase: GetOneExpenseUseCase,
     private val updateOneExpenseUseCase: UpdateOneExpenseUseCase,
     private val insertManyExpensesUseCase: InsertManyExpensesUseCase,
+    private val deleteOneExpenseUseCase: DeleteOneExpenseUseCase
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<ManageExpenseUiState> = MutableStateFlow(
         ManageExpenseUiState()
@@ -40,6 +42,15 @@ class ManageExpenseViewModel @Inject constructor(
                     is ManageExpenseViewMode.InsertingOne -> onInsert()
                     is ManageExpenseViewMode.ViewingOne -> onUpdate()
                 }
+            }
+        }
+    }
+
+    fun onDelete() {
+        viewModelScope.launch {
+            try {
+                deleteOneExpenseUseCase.execute(_uiState.value.expenseId)
+            } catch (exception: Exception) {
             }
         }
     }

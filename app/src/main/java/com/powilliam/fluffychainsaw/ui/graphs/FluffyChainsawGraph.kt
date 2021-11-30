@@ -79,7 +79,11 @@ private fun NavGraphBuilder.bottomSheets(navController: NavHostController) {
             onChangeName = viewModel::onChangeName,
             onChangeCost = viewModel::onChangeCost,
             onChangeType = viewModel::onChangeType,
-            onCancel = navController::popBackStack
+            onCancel = navController::popBackStack,
+            onDelete = {
+                viewModel.onDelete()
+                navController.popBackStack()
+            }
         ) {
             viewModel.onInsertOrUpdate()
             navController.popBackStack()

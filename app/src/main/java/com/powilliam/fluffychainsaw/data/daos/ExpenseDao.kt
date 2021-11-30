@@ -1,6 +1,7 @@
 package com.powilliam.fluffychainsaw.data.daos
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.powilliam.fluffychainsaw.data.entities.Expense
@@ -20,4 +21,7 @@ interface ExpenseDao {
 
     @Insert
     suspend fun insertManyExpenses(vararg expense: Expense)
+
+    @Query("DELETE FROM Expense WHERE expenseId = :id")
+    suspend fun deleteOneExpense(id: Long)
 }

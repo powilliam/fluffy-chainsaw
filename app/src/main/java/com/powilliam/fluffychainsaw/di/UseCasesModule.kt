@@ -33,4 +33,10 @@ abstract class UseCasesModule {
     abstract fun bindInsertManyExpensesUseCase(
         insertManyExpensesUseCaseImpl: InsertManyExpensesUseCaseImpl
     ): InsertManyExpensesUseCase
+
+    @ViewModelScoped
+    @Binds
+    abstract fun bindDeleteOneExpenseUseCase(
+        deleteOneExpenseUseCaseImpl: DeleteOneExpenseUseCaseImpl
+    ): DeleteOneExpenseUseCase
 }

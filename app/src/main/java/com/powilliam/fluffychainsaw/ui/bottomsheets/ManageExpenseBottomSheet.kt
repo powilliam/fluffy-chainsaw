@@ -3,6 +3,10 @@ package com.powilliam.fluffychainsaw.ui.bottomsheets
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.DeleteForever
+import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -19,8 +23,10 @@ import com.powilliam.fluffychainsaw.R
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
 import com.powilliam.fluffychainsaw.ui.composables.Option
 import com.powilliam.fluffychainsaw.ui.composables.SingleOptionSelection
+import com.powilliam.fluffychainsaw.ui.constants.ManageExpenseViewMode
 import com.powilliam.fluffychainsaw.ui.viewmodels.ManageExpenseUiState
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ManageExpenseBottomSheet(
     modifier: Modifier = Modifier,
@@ -28,6 +34,7 @@ fun ManageExpenseBottomSheet(
     onChangeName: (String) -> Unit = {},
     onChangeCost: (String) -> Unit = {},
     onChangeType: (ExpenseType) -> Unit = {},
+    onDelete: () -> Unit = {},
     onCancel: () -> Unit = {},
     onDone: () -> Unit = {}
 ) {
@@ -37,7 +44,17 @@ fun ManageExpenseBottomSheet(
         listOf(uiState.name, uiState.cost).all { field -> field.isNotEmpty() }
     }
 
-    Surface(modifier.fillMaxWidth()) {
+    Scaffold(
+        topBar = {
+            ManageExpenseBottomSheetTopAppBar(
+                canSubmit = canSubmit,
+                canDelete = uiState.viewMode == ManageExpenseViewMode.ViewingOne,
+                onCancel = onCancel,
+                onDelete = onDelete,
+                onDone = onDone
+            )
+        }
+    ) {
         Column(modifier.padding(16.dp)) {
             ContainedTextField(
                 value = uiState.name,
@@ -85,28 +102,46 @@ fun ManageExpenseBottomSheet(
             ) { option ->
                 onChangeType(option.value)
             }
-            Spacer(modifier.height(16.dp))
-            Row(
-                modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                TextButton(onClick = onCancel) {
-                    Text(text = stringResource(R.string.manage_expense_cancel_button))
-                }
-                Spacer(modifier.width(8.dp))
-                FilledTonalButton(
-                    enabled = canSubmit,
-                    onClick = {
-                        if (canSubmit) {
-                            onDone()
-                        }
-                    }
-                ) {
-                    Text(text = stringResource(R.string.manage_expense_done_button))
-                }
-            }
         }
     }
+}
+
+@Composable
+private fun ManageExpenseBottomSheetTopAppBar(
+    canDelete: Boolean = false,
+    canSubmit: Boolean = false,
+    onCancel: () -> Unit = {},
+    onDelete: () -> Unit = {},
+    onDone: () -> Unit = {}
+) {
+    SmallTopAppBar(
+        title = {},
+        navigationIcon = {
+            IconButton(onClick = onCancel) {
+                Icon(imageVector = Icons.Rounded.Close, contentDescription = null)
+            }
+        },
+        actions = {
+            if (canDelete) {
+                IconButton(onClick = onDelete) {
+                    Icon(
+                        imageVector = Icons.Rounded.DeleteForever,
+                        contentDescription = null
+                    )
+                }
+            }
+            IconButton(
+                enabled = canSubmit,
+                onClick = {
+                    if (canSubmit) {
+                        onDone()
+                    }
+                }
+            ) {
+                Icon(imageVector = Icons.Rounded.Done, contentDescription = null)
+            }
+        }
+    )
 }
 
 @Preview
