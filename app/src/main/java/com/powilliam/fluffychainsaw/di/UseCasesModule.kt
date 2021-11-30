@@ -24,6 +24,12 @@ abstract class UseCasesModule {
 
     @ViewModelScoped
     @Binds
+    abstract fun bindUpdateOneExpenseUseCase(
+        updateOneExpenseUseCaseImpl: UpdateOneExpenseUseCaseImpl
+    ): UpdateOneExpenseUseCase
+
+    @ViewModelScoped
+    @Binds
     abstract fun bindInsertManyExpensesUseCase(
         insertManyExpensesUseCaseImpl: InsertManyExpensesUseCaseImpl
     ): InsertManyExpensesUseCase

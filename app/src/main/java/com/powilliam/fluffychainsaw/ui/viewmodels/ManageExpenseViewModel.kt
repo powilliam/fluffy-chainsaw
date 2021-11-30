@@ -6,6 +6,7 @@ import com.powilliam.fluffychainsaw.data.entities.Expense
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
 import com.powilliam.fluffychainsaw.data.usecases.GetOneExpenseUseCase
 import com.powilliam.fluffychainsaw.data.usecases.InsertManyExpensesUseCase
+import com.powilliam.fluffychainsaw.data.usecases.UpdateOneExpenseUseCase
 import com.powilliam.fluffychainsaw.ui.constants.ManageExpenseViewMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ManageExpenseUiState(
+    val expenseId: Long = -1,
     val name: String = "",
     val cost: String = "",
     val type: ExpenseType = ExpenseType.Variable,
@@ -23,6 +25,7 @@ data class ManageExpenseUiState(
 @HiltViewModel
 class ManageExpenseViewModel @Inject constructor(
     private val getOneExpenseUseCase: GetOneExpenseUseCase,
+    private val updateOneExpenseUseCase: UpdateOneExpenseUseCase,
     private val insertManyExpensesUseCase: InsertManyExpensesUseCase,
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<ManageExpenseUiState> = MutableStateFlow(
@@ -35,7 +38,7 @@ class ManageExpenseViewModel @Inject constructor(
             with(_uiState.value) {
                 when (this.viewMode) {
                     is ManageExpenseViewMode.InsertingOne -> onInsert()
-                    else -> {}
+                    is ManageExpenseViewMode.ViewingOne -> onUpdate()
                 }
             }
         }
@@ -47,6 +50,7 @@ class ManageExpenseViewModel @Inject constructor(
                 val expense = getOneExpenseUseCase.execute(expenseId!!)
                 _uiState.emit(
                     ManageExpenseUiState(
+                        expenseId = expense.expenseId,
                         name = expense.name,
                         cost = "${expense.cost}",
                         type = expense.type,
@@ -88,6 +92,18 @@ class ManageExpenseViewModel @Inject constructor(
                 type = this.type
             )
             insertManyExpensesUseCase.execute(expense)
+        } catch (exception: Exception) {
+        }
+    }
+
+    private suspend fun ManageExpenseUiState.onUpdate() {
+        try {
+            updateOneExpenseUseCase.execute(
+                id = this.expenseId,
+                name = this.name,
+                cost = this.cost.toFloat(),
+                type = this.type
+            )
         } catch (exception: Exception) {
         }
     }
