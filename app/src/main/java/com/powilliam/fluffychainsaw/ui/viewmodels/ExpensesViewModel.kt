@@ -5,13 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.powilliam.fluffychainsaw.data.entities.Expense
 import com.powilliam.fluffychainsaw.data.usecases.GetAllExpensesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class ExpensesUiState(val expenses: List<Expense> = emptyList())
+data class ExpensesUiState(
+    val expenses: List<Expense> = emptyList(),
+    val filteredExpenses: List<Expense> = emptyList(),
+    val query: String = ""
+)
 
 @HiltViewModel
 class ExpensesViewModel @Inject constructor(
@@ -24,6 +26,35 @@ class ExpensesViewModel @Inject constructor(
         viewModelScope.launch {
             getAllExpensesUseCase.execute().collect { expenses ->
                 _uiState.emit(ExpensesUiState(expenses))
+            }
+        }
+    }
+
+    fun onSearch(newValue: String) {
+        viewModelScope.launch {
+            with(_uiState.value) {
+                _uiState.emit(
+                    this.copy(
+                        query = newValue,
+                        filteredExpenses = filterExpensesThatMatchesWithQuery(newValue)
+                    )
+                )
+            }
+        }
+    }
+
+    private fun ExpensesUiState.filterExpensesThatMatchesWithQuery(query: String): List<Expense> {
+        return if (query.isEmpty()) {
+            emptyList()
+        } else {
+            expenses.filter { expense ->
+                expense.name.contains(
+                    query,
+                    ignoreCase = false
+                ) or expense.name.contentEquals(
+                    query,
+                    ignoreCase = false
+                )
             }
         }
     }

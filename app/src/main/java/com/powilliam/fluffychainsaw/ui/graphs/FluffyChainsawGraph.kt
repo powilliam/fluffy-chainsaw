@@ -53,7 +53,10 @@ private fun NavGraphBuilder.screens(
         val viewModel = hiltViewModel<ExpensesViewModel>()
         val uiState by viewModel.uiState.collectAsState()
 
-        ExpensesScreen(uiState) { expense ->
+        ExpensesScreen(
+            uiState,
+            onSearch = viewModel::onSearch
+        ) { expense ->
             navController.navigate(Screen.ManageExpense.navigate(expense))
         }
     }
