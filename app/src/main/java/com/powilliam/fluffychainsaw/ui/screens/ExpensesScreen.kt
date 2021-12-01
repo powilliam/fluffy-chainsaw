@@ -28,7 +28,7 @@ fun ExpensesScreen(
             }
         }
     ) {
-        ExpensesList(uiState.expenses) { expense ->
+        ExpensesList(expenses = uiState.expenses) { expense ->
             onNavigateToManageExpense(expense)
         }
     }

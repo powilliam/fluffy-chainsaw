@@ -20,6 +20,7 @@ import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 @Composable
 fun ExpensesList(
     expenses: List<Expense> = emptyList(),
+    header: (@Composable () -> Unit)? = null,
     onNavigateToManageExpense: (Expense) -> Unit = {}
 ) {
     val expensesByType by rememberUpdatedState(expenses.groupBy { expense -> expense.type })
@@ -30,6 +31,14 @@ fun ExpensesList(
     }
 
     LazyColumn {
+        header?.let { composable ->
+            item {
+                ExpenseListHeader {
+                    composable()
+                }
+            }
+        }
+
         expensesByType.forEach { expenseByType ->
             if (hasMoreThanOneTypeOfExpense) {
                 stickyHeader(expenseByType.key) {
@@ -51,6 +60,20 @@ fun ExpensesList(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun ExpenseListHeader(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Box(
+        modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+    ) {
+        content()
     }
 }
 
@@ -84,7 +107,7 @@ private fun ExpenseListStickyHeader(
 private fun ExpensesListPreview() {
     FluffyChainsawTheme {
         ExpensesList(
-            listOf(
+            expenses = listOf(
                 Expense(
                     name = "Disney+",
                     cost = 20.99F,
@@ -115,7 +138,7 @@ private fun ExpensesListPreview() {
 private fun ExpensesListWithOneTypeOfExpensePreview() {
     FluffyChainsawTheme {
         ExpensesList(
-            listOf(
+            expenses = listOf(
                 Expense(
                     name = "Disney+",
                     cost = 20.99F,
@@ -132,6 +155,40 @@ private fun ExpensesListWithOneTypeOfExpensePreview() {
                     type = ExpenseType.Fixed
                 ),
             )
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ExpensesListWithHeaderPreview() {
+    FluffyChainsawTheme {
+        ExpensesList(
+            expenses = listOf(
+                Expense(
+                    name = "Disney+",
+                    cost = 20.99F,
+                    type = ExpenseType.Fixed
+                ),
+                Expense(
+                    name = "HBO Max",
+                    cost = 29.99F,
+                    type = ExpenseType.Fixed
+                ),
+                Expense(
+                    name = "Therapy",
+                    cost = 180F,
+                    type = ExpenseType.Fixed
+                ),
+                Expense(
+                    name = "FarCry 5",
+                    cost = 40F,
+                    type = ExpenseType.Variable
+                )
+            ),
+            header = {
+                Text(text = "Header")
+            }
         )
     }
 }
