@@ -28,6 +28,7 @@ fun ContainedTextField(
     shape: Shape = RoundedCornerShape(12.dp),
     color: Color = MaterialTheme.colorScheme.surface,
     tonalElevation: Dp = 1.dp,
+    singleLine: Boolean = true,
     leading: @Composable() (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -58,6 +59,7 @@ fun ContainedTextField(
                 cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActions,
+                singleLine = singleLine,
                 decorationBox = { innerTextField ->
                     ContainedTextFieldDecoration(leading = leading) {
                         innerTextField()
