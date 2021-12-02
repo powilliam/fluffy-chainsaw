@@ -51,7 +51,7 @@ fun ExpensesScreen(
             stickyHeader = {
                 ContainedTextField(
                     value = uiState.query,
-                    placeholder = "Search",
+                    placeholder = stringResource(R.string.expenses_search_placeholder),
                     shape = RoundedCornerShape(percent = 50),
                     onValueChange = onSearch,
                     leading = {

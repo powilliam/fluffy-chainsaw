@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Fluffy Chainsaw</string>
     <string name="expenses_screen_title">Expenses</string>
+    <string name="expenses_search_placeholder">Search</string>
     <string name="expense_type_fixed">Fixed</string>
     <string name="expense_type_variable">Variable</string>
     <string name="manage_expense_name_placeholder">Name (Ex: Disney+)</string>
