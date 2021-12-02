@@ -1,11 +1,15 @@
 package com.powilliam.fluffychainsaw.ui.screens
 
+import androidx.compose.animation.core.DecayAnimationSpec
+import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.powilliam.fluffychainsaw.R
@@ -18,12 +22,20 @@ import com.powilliam.fluffychainsaw.ui.viewmodels.ExpensesUiState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpensesScreen(
+    modifier: Modifier = Modifier,
+    decayAnimationSpec: DecayAnimationSpec<Float> = rememberSplineBasedDecay(),
+    scrollBehavior: TopAppBarScrollBehavior = remember {
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+            decayAnimationSpec
+        )
+    },
     uiState: ExpensesUiState = ExpensesUiState(),
     onSearch: (String) -> Unit = {},
     onNavigateToManageExpense: (Expense?) -> Unit = {}
 ) {
     Scaffold(
-        topBar = { ExpensesScreenAppBar() },
+        modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = { ExpensesScreenAppBar(scrollBehavior) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { onNavigateToManageExpense(null) }
@@ -54,9 +66,17 @@ fun ExpensesScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ExpensesScreenAppBar() {
+private fun ExpensesScreenAppBar(
+    scrollBehavior: TopAppBarScrollBehavior,
+    colors: TopAppBarColors = TopAppBarDefaults.smallTopAppBarColors(
+        scrolledContainerColor = MaterialTheme.colorScheme.surface
+    )
+) {
     LargeTopAppBar(
+        scrollBehavior = scrollBehavior,
+        colors = colors,
         title = {
             Text(text = stringResource(R.string.expenses_screen_title))
         }
