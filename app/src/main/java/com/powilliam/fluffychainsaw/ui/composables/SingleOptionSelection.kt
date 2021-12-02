@@ -46,7 +46,6 @@ fun <T> SingleOptionSelection(
                         modifier
                             .clickable(interactionSource, null) { onSelectOne(option) }
                             .padding(vertical = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         val icon = if (selectedOption == option.value) {
@@ -54,11 +53,6 @@ fun <T> SingleOptionSelection(
                         } else {
                             Icons.Rounded.RadioButtonUnchecked
                         }
-
-                        Text(
-                            text = option.label,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
 
                         AnimatedContent(
                             targetState = icon,
@@ -70,6 +64,11 @@ fun <T> SingleOptionSelection(
                                 tint = MaterialTheme.colorScheme.primary
                             )
                         }
+                        Spacer(modifier.width(16.dp))
+                        Text(
+                            text = option.label,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
                     }
                 }
             }
