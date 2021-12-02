@@ -23,13 +23,13 @@ import com.powilliam.fluffychainsaw.ui.viewmodels.ExpensesUiState
 @Composable
 fun ExpensesScreen(
     modifier: Modifier = Modifier,
+    uiState: ExpensesUiState = ExpensesUiState(),
     decayAnimationSpec: DecayAnimationSpec<Float> = rememberSplineBasedDecay(),
     scrollBehavior: TopAppBarScrollBehavior = remember {
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
             decayAnimationSpec
         )
     },
-    uiState: ExpensesUiState = ExpensesUiState(),
     onSearch: (String) -> Unit = {},
     onNavigateToManageExpense: (Expense?) -> Unit = {}
 ) {
