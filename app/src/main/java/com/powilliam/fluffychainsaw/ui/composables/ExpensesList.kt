@@ -24,11 +24,11 @@ fun ExpensesList(
     stickyHeader: (@Composable () -> Unit)? = null,
     onNavigateToManageExpense: (Expense) -> Unit = {}
 ) {
-    val expensesByType by rememberUpdatedState(expenses.groupBy { expense -> expense.type })
+    val expensesByType by remember {
+        derivedStateOf { expenses.groupBy { expense -> expense.type } }
+    }
     val hasMoreThanOneTypeOfExpense by remember {
-        derivedStateOf {
-            expensesByType.keys.size > 1
-        }
+        derivedStateOf { expensesByType.keys.size > 1 }
     }
 
     LazyColumn(lazyColumnModifier) {
@@ -72,7 +72,7 @@ private fun ExpenseListStickyHeader(
         Box(
             modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         ) {
             content()
         }
