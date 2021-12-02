@@ -19,6 +19,7 @@ import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExpensesList(
+    lazyColumnModifier: Modifier = Modifier,
     expenses: List<Expense> = emptyList(),
     stickyHeader: (@Composable () -> Unit)? = null,
     onNavigateToManageExpense: (Expense) -> Unit = {}
@@ -30,7 +31,7 @@ fun ExpensesList(
         }
     }
 
-    LazyColumn {
+    LazyColumn(lazyColumnModifier) {
         stickyHeader?.let { composable ->
             stickyHeader {
                 ExpenseListStickyHeader {
@@ -67,12 +68,14 @@ private fun ExpenseListStickyHeader(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    Box(
-        modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-    ) {
-        content()
+    Surface(modifier.fillMaxWidth()) {
+        Box(
+            modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+        ) {
+            content()
+        }
     }
 }
 

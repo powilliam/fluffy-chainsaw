@@ -2,6 +2,7 @@ package com.powilliam.fluffychainsaw.ui.screens
 
 import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.rememberSplineBasedDecay
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AttachMoney
@@ -45,6 +46,7 @@ fun ExpensesScreen(
         }
     ) {
         ExpensesList(
+            modifier.fillMaxSize(),
             expenses = uiState.filteredExpenses.ifEmpty { uiState.expenses },
             stickyHeader = {
                 ContainedTextField(
@@ -74,7 +76,7 @@ private fun ExpensesScreenAppBar(
         scrolledContainerColor = MaterialTheme.colorScheme.surface
     )
 ) {
-    SmallTopAppBar(
+    LargeTopAppBar(
         scrollBehavior = scrollBehavior,
         colors = colors,
         title = {
