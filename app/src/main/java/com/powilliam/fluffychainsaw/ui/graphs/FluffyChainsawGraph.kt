@@ -36,7 +36,7 @@ fun FluffyChainsawGraph(
         modifier.navigationBarsWithImePadding(),
         sheetBackgroundColor = MaterialTheme.colorScheme.surface,
         sheetShape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
-        sheetElevation = 12.dp,
+        sheetElevation = 0.dp,
         scrimColor = Color.Transparent
     ) {
         NavHost(navController, startDestination = Screen.Expenses.route) {
