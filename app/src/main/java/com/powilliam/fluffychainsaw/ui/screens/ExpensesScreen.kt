@@ -74,7 +74,7 @@ private fun ExpensesScreenAppBar(
         scrolledContainerColor = MaterialTheme.colorScheme.surface
     )
 ) {
-    LargeTopAppBar(
+    SmallTopAppBar(
         scrollBehavior = scrollBehavior,
         colors = colors,
         title = {
