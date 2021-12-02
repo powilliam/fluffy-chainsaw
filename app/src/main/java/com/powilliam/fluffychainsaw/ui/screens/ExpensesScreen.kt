@@ -46,7 +46,7 @@ fun ExpensesScreen(
     ) {
         ExpensesList(
             expenses = uiState.filteredExpenses.ifEmpty { uiState.expenses },
-            header = {
+            stickyHeader = {
                 ContainedTextField(
                     value = uiState.query,
                     placeholder = "Search",

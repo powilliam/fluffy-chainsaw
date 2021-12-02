@@ -3,9 +3,7 @@ package com.powilliam.fluffychainsaw.ui.composables
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -22,7 +20,7 @@ import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 @Composable
 fun ExpensesList(
     expenses: List<Expense> = emptyList(),
-    header: (@Composable () -> Unit)? = null,
+    stickyHeader: (@Composable () -> Unit)? = null,
     onNavigateToManageExpense: (Expense) -> Unit = {}
 ) {
     val expensesByType by rememberUpdatedState(expenses.groupBy { expense -> expense.type })
@@ -33,9 +31,9 @@ fun ExpensesList(
     }
 
     LazyColumn {
-        header?.let { composable ->
-            item {
-                ExpenseListHeader {
+        stickyHeader?.let { composable ->
+            stickyHeader {
+                ExpenseListStickyHeader {
                     composable()
                 }
             }
@@ -43,8 +41,8 @@ fun ExpensesList(
 
         expensesByType.forEach { expenseByType ->
             if (hasMoreThanOneTypeOfExpense) {
-                stickyHeader(expenseByType.key) {
-                    ExpenseListStickyHeader {
+                item(expenseByType.key) {
+                    ExpenseListItemHeader {
                         val id = when (expenseByType.key) {
                             ExpenseType.Fixed -> R.string.expense_type_fixed
                             else -> R.string.expense_type_variable
@@ -55,8 +53,7 @@ fun ExpensesList(
                 }
             }
 
-            // TODO: Key should return an id
-            items(expenseByType.value, key = { expense -> expense.name }) { expense ->
+            items(expenseByType.value, key = { expense -> expense.expenseId }) { expense ->
                 ExpenseCard(expense = expense) {
                     onNavigateToManageExpense(expense)
                 }
@@ -66,7 +63,7 @@ fun ExpensesList(
 }
 
 @Composable
-private fun ExpenseListHeader(
+private fun ExpenseListStickyHeader(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
@@ -80,7 +77,7 @@ private fun ExpenseListHeader(
 }
 
 @Composable
-private fun ExpenseListStickyHeader(
+private fun ExpenseListItemHeader(
     modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit
 ) {
@@ -188,7 +185,7 @@ private fun ExpensesListWithHeaderPreview() {
                     type = ExpenseType.Variable
                 )
             ),
-            header = {
+            stickyHeader = {
                 Text(text = "Header")
             }
         )
