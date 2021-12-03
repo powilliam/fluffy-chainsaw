@@ -7,6 +7,5 @@ object Versions {
     const val composeVersion = "1.1.0-beta03"
     const val lifecycleVersion = "2.4.0"
     const val hiltVersion = "2.38.1"
-    const val accompanistVersion = "0.21.3-beta"
     const val roomVersion = "2.3.0"
 }

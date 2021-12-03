@@ -81,10 +81,6 @@ dependencies {
 
     implementation(Dependencies.AndroidX.Navigation.compose)
 
-    implementation(Dependencies.Accompanist.navigationMaterial)
-    implementation(Dependencies.Accompanist.insets)
-    implementation(Dependencies.Accompanist.insetsUi)
-
     implementation(Dependencies.AndroidX.Room.room)
     implementation(Dependencies.AndroidX.Room.ktx)
     kapt(Dependencies.AndroidX.Room.kapt)

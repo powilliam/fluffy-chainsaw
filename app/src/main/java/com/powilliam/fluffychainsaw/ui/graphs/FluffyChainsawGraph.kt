@@ -7,7 +7,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.navigation.material.*
 import com.powilliam.fluffychainsaw.ui.constants.Screen
 import com.powilliam.fluffychainsaw.ui.screens.ExpensesScreen
 import com.powilliam.fluffychainsaw.ui.screens.ManageExpenseScreen
@@ -15,7 +14,6 @@ import com.powilliam.fluffychainsaw.ui.viewmodels.ExpensesViewModel
 import com.powilliam.fluffychainsaw.ui.viewmodels.ManageExpenseViewModel
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun FluffyChainsawGraph(navController: NavHostController = rememberNavController()) {
     NavHost(navController, startDestination = Screen.Expenses.route) {

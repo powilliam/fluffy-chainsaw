@@ -52,13 +52,4 @@ object Dependencies {
     object Google {
         const val materialDesign = "com.google.android.material:material:1.5.0-beta01"
     }
-
-    object Accompanist {
-        const val navigationMaterial =
-            "com.google.accompanist:accompanist-navigation-material:${Versions.accompanistVersion}"
-        const val insets =
-            "com.google.accompanist:accompanist-insets:${Versions.accompanistVersion}"
-        const val insetsUi =
-            "com.google.accompanist:accompanist-insets-ui:${Versions.accompanistVersion}"
-    }
 }
