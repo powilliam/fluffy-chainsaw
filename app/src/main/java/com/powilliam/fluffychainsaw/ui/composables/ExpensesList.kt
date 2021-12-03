@@ -19,19 +19,15 @@ import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExpensesList(
-    lazyColumnModifier: Modifier = Modifier,
+    modifier: Modifier = Modifier,
     expenses: List<Expense> = emptyList(),
     stickyHeader: (@Composable () -> Unit)? = null,
     onNavigateToManageExpense: (Expense) -> Unit = {}
 ) {
-    val expensesByType by remember {
-        derivedStateOf { expenses.groupBy { expense -> expense.type } }
-    }
-    val hasMoreThanOneTypeOfExpense by remember {
-        derivedStateOf { expensesByType.keys.size > 1 }
-    }
+    val expensesByType = expenses.groupBy { expense -> expense.type }
+    val hasMoreThanOneTypeOfExpense = expensesByType.keys.size > 1
 
-    LazyColumn(lazyColumnModifier) {
+    LazyColumn(modifier) {
         stickyHeader?.let { composable ->
             stickyHeader {
                 ExpenseListStickyHeader {

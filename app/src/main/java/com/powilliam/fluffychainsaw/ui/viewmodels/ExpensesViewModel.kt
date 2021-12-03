@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 data class ExpensesUiState(
     val expenses: List<Expense> = emptyList(),
-    val filteredExpenses: List<Expense> = emptyList(),
     val query: String = ""
 )
 
@@ -24,37 +23,17 @@ class ExpensesViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            getAllExpensesUseCase.execute().collect { expenses ->
-                _uiState.emit(ExpensesUiState(expenses))
-            }
+            getAllExpensesUseCase.execute()
+                .collect { expenses ->
+                    _uiState.emit(_uiState.value.copy(expenses = expenses))
+                }
         }
     }
 
     fun onSearch(newValue: String) {
         viewModelScope.launch {
             with(_uiState.value) {
-                _uiState.emit(
-                    this.copy(
-                        query = newValue,
-                        filteredExpenses = filterExpensesThatMatchesWithQuery(newValue)
-                    )
-                )
-            }
-        }
-    }
-
-    private fun ExpensesUiState.filterExpensesThatMatchesWithQuery(query: String): List<Expense> {
-        return if (query.isEmpty()) {
-            emptyList()
-        } else {
-            expenses.filter { expense ->
-                expense.name.contains(
-                    query,
-                    ignoreCase = false
-                ) or expense.name.contentEquals(
-                    query,
-                    ignoreCase = false
-                )
+                _uiState.emit(this.copy(query = newValue))
             }
         }
     }

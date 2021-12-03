@@ -1,5 +1,6 @@
 package com.powilliam.fluffychainsaw.ui.screens
 
+import android.util.Log
 import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,6 +35,15 @@ fun ExpensesScreen(
     onSearch: (String) -> Unit = {},
     onNavigateToManageExpense: (Expense?) -> Unit = {}
 ) {
+    val filteredExpenses = with(uiState) {
+        expenses.filter { expense ->
+            expense.name.contains(
+                query,
+                ignoreCase = false
+            ) or expense.name.contentEquals(query, ignoreCase = false)
+        }
+    }
+
     Scaffold(
         modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = { ExpensesScreenAppBar(scrollBehavior) },
@@ -47,7 +57,7 @@ fun ExpensesScreen(
     ) {
         ExpensesList(
             modifier.fillMaxSize(),
-            expenses = uiState.filteredExpenses.ifEmpty { uiState.expenses },
+            expenses = filteredExpenses,
             stickyHeader = {
                 ContainedTextField(
                     value = uiState.query,

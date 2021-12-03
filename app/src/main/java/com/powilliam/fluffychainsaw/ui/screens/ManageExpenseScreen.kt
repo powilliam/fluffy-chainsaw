@@ -1,4 +1,4 @@
-package com.powilliam.fluffychainsaw.ui.bottomsheets
+package com.powilliam.fluffychainsaw.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -28,7 +28,7 @@ import com.powilliam.fluffychainsaw.ui.viewmodels.ManageExpenseUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ManageExpenseBottomSheet(
+fun ManageExpenseScreen(
     modifier: Modifier = Modifier,
     uiState: ManageExpenseUiState = ManageExpenseUiState(),
     onChangeName: (String) -> Unit = {},
@@ -39,14 +39,11 @@ fun ManageExpenseBottomSheet(
     onDone: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
-
-    val canSubmit by derivedStateOf {
-        listOf(uiState.name, uiState.cost).all { field -> field.isNotEmpty() }
-    }
+    val canSubmit = listOf(uiState.name, uiState.cost).all { field -> field.isNotEmpty() }
 
     Scaffold(
         topBar = {
-            ManageExpenseBottomSheetTopAppBar(
+            ManageExpenseScreenTopAppBar(
                 canSubmit = canSubmit,
                 canDelete = uiState.viewMode == ManageExpenseViewMode.ViewingOne,
                 onCancel = onCancel,
@@ -107,7 +104,7 @@ fun ManageExpenseBottomSheet(
 }
 
 @Composable
-private fun ManageExpenseBottomSheetTopAppBar(
+private fun ManageExpenseScreenTopAppBar(
     canDelete: Boolean = false,
     canSubmit: Boolean = false,
     onCancel: () -> Unit = {},
@@ -146,8 +143,8 @@ private fun ManageExpenseBottomSheetTopAppBar(
 
 @Preview
 @Composable
-private fun ManageExpenseBottomSheetPreview() {
+private fun ManageExpenseScreenPreview() {
     FluffyChainsawTheme {
-        ManageExpenseBottomSheet()
+        ManageExpenseScreen()
     }
 }
