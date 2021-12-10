@@ -51,56 +51,7 @@ fun ManageExpenseScreen(
                 onDone = onDone
             )
         }
-    ) {
-        Column(modifier.padding(16.dp)) {
-            ContainedTextField(
-                value = uiState.name,
-                placeholder = stringResource(R.string.manage_expense_name_placeholder),
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = {
-                        focusManager.moveFocus(FocusDirection.Down)
-                    }
-                ),
-                onValueChange = onChangeName
-            )
-            Spacer(modifier.height(16.dp))
-            ContainedTextField(
-                value = uiState.cost,
-                placeholder = stringResource(R.string.manage_expense_cost_placeholder),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        if (canSubmit) {
-                            onDone()
-                        }
-                    }
-                ),
-                onValueChange = onChangeCost
-            )
-            Spacer(modifier.height(16.dp))
-            SingleOptionSelection(
-                selectedOption = uiState.type,
-                options = listOf(
-                    Option(
-                        label = stringResource(R.string.expense_type_variable),
-                        value = ExpenseType.Variable
-                    ),
-                    Option(
-                        label = stringResource(R.string.expense_type_fixed),
-                        value = ExpenseType.Fixed
-                    ),
-                )
-            ) { option ->
-                onChangeType(option.value)
-            }
-        }
-    }
+    ) {}
 }
 
 @Composable
@@ -127,7 +78,7 @@ private fun ManageExpenseScreenTopAppBar(
                     )
                 }
             }
-            IconButton(
+            FilledTonalButton(
                 enabled = canSubmit,
                 onClick = {
                     if (canSubmit) {
@@ -135,7 +86,7 @@ private fun ManageExpenseScreenTopAppBar(
                     }
                 }
             ) {
-                Icon(imageVector = Icons.Rounded.Done, contentDescription = null)
+                Text(text = stringResource(R.string.manage_expense_done_button))
             }
         }
     )
