@@ -45,7 +45,8 @@ fun ContainedTextField(
         Box(
             modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .defaultMinSize(minHeight = 56.dp)
+                .padding(horizontal = 16.dp, vertical = 16.dp)
         ) {
             BasicTextField(
                 modifier = modifier
@@ -73,9 +74,7 @@ fun ContainedTextField(
                         .padding(start = if (leading != null) 40.dp else 0.dp),
                     text = placeholder,
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        color = MaterialTheme.colorScheme.onSurface.copy(
-                            alpha = 0.4F
-                        )
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 )
             }
@@ -123,9 +122,7 @@ private fun ContainedTextFieldWithLeadingAndPreview() {
                 Icon(imageVector = Icons.Rounded.Search, contentDescription = null)
             },
             shape = RoundedCornerShape(percent = 50)
-        ) {
-
-        }
+        ) {}
     }
 }
 
@@ -139,8 +136,6 @@ private fun ContainedTextFieldWithLeadingAndWithoutPlaceholderPreview() {
                 Icon(imageVector = Icons.Rounded.Search, contentDescription = null)
             },
             shape = RoundedCornerShape(percent = 50)
-        ) {
-
-        }
+        ) {}
     }
 }
