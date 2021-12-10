@@ -13,24 +13,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 
 @Composable
 fun Chip(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.primaryContainer,
+    color: Color = MaterialTheme.colorScheme.surface,
+    tonalElevation: Dp = 0.dp,
     onClick: () -> Unit = {},
     content: @Composable RowScope.() -> Unit = {}
 ) {
     Surface(
         color = color,
-        shape = RoundedCornerShape(percent = 50)
+        shape = RoundedCornerShape(8.dp),
+        tonalElevation = tonalElevation
     ) {
         Row(
             modifier
                 .clickable(onClick = onClick)
-                .padding(vertical = 8.dp, horizontal = 12.dp)
+                .padding(horizontal = 12.dp, vertical = 6.dp)
         ) {
             ProvideTextStyle(MaterialTheme.typography.labelLarge) {
                 content()
@@ -44,6 +47,16 @@ fun Chip(
 private fun ChipPreview() {
     FluffyChainsawTheme {
         Chip {
+            Text(text = "Hello World")
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ChipPreviewWithTonalElevation() {
+    FluffyChainsawTheme {
+        Chip(tonalElevation = 2.dp) {
             Text(text = "Hello World")
         }
     }
