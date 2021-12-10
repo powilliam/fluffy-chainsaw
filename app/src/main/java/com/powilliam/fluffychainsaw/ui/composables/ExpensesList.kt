@@ -24,9 +24,6 @@ fun ExpensesList(
     stickyHeader: (@Composable () -> Unit)? = null,
     onNavigateToManageExpense: (Expense) -> Unit = {}
 ) {
-    val expensesByType = expenses.groupBy { expense -> expense.type }
-    val hasMoreThanOneTypeOfExpense = expensesByType.keys.size > 1
-
     LazyColumn(modifier) {
         stickyHeader?.let { composable ->
             stickyHeader {
@@ -36,8 +33,9 @@ fun ExpensesList(
             }
         }
 
-        expensesByType.forEach { expenseByType ->
-            if (hasMoreThanOneTypeOfExpense) {
+        expenses
+            .groupBy { expense -> expense.type }
+            .onEach { expenseByType ->
                 item(expenseByType.key) {
                     ExpenseListItemHeader {
                         val id = when (expenseByType.key) {
@@ -48,14 +46,13 @@ fun ExpensesList(
                         Text(text = stringResource(id))
                     }
                 }
-            }
 
-            items(expenseByType.value, key = { expense -> expense.expenseId }) { expense ->
-                ExpenseCard(expense = expense) {
-                    onNavigateToManageExpense(expense)
+                items(expenseByType.value, key = { expense -> expense.expenseId }) { expense ->
+                    ExpenseCard(expense = expense) {
+                        onNavigateToManageExpense(expense)
+                    }
                 }
             }
-        }
     }
 }
 
@@ -68,7 +65,7 @@ private fun ExpenseListStickyHeader(
         Box(
             modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                .padding(16.dp),
         ) {
             content()
         }
@@ -84,14 +81,12 @@ private fun ExpenseListItemHeader(
         Row(
             modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp, horizontal = 16.dp),
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             ProvideTextStyle(
-                MaterialTheme.typography.labelLarge.copy(
-                    color = MaterialTheme.colorScheme.primary.copy(
-                        alpha = 0.8F
-                    )
+                MaterialTheme.typography.labelSmall.copy(
+                    color = MaterialTheme.colorScheme.primary
                 )
             ) {
                 content()
