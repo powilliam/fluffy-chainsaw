@@ -68,14 +68,6 @@ fun ExpenseCard(
                     Text(text = "$cost", style = MaterialTheme.typography.bodyMedium)
                 }
             }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Spacer(modifier.width(16.dp))
-                Icon(
-                    imageVector = Icons.Rounded.DragHandle,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.outline
-                )
-            }
         }
     }
 }
