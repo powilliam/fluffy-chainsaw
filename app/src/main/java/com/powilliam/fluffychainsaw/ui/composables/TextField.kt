@@ -17,10 +17,46 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
+
+@Composable
+fun TextField(
+    modifier: Modifier = Modifier,
+    singleLine: Boolean = true,
+    textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    value: String,
+    placeholder: String,
+    onValueChange: (String) -> Unit
+) {
+    Box(modifier.fillMaxWidth()) {
+        BasicTextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterStart),
+            value = value,
+            onValueChange = onValueChange,
+            textStyle = textStyle.copy(color = MaterialTheme.colorScheme.onSurface),
+            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+            singleLine = singleLine,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions
+        )
+
+        if (value.isEmpty()) {
+            Text(
+                modifier = modifier.align(Alignment.CenterStart),
+                text = placeholder,
+                style = textStyle
+            )
+        }
+    }
+}
 
 @Composable
 fun ContainedTextField(
@@ -97,6 +133,14 @@ private fun ContainedTextFieldDecoration(
             Spacer(modifier.width(16.dp))
         }
         content()
+    }
+}
+
+@Preview
+@Composable
+private fun TextFieldPreview() {
+    FluffyChainsawTheme {
+        TextField(value = "", placeholder = "Hello World") {}
     }
 }
 

@@ -4,42 +4,69 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.DeleteForever
-import androidx.compose.material.icons.rounded.Done
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.powilliam.fluffychainsaw.ui.composables.ContainedTextField
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 import com.powilliam.fluffychainsaw.R
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
-import com.powilliam.fluffychainsaw.ui.composables.Option
-import com.powilliam.fluffychainsaw.ui.composables.SingleOptionSelection
+import com.powilliam.fluffychainsaw.ui.composables.*
 import com.powilliam.fluffychainsaw.ui.constants.ManageExpenseViewMode
 import com.powilliam.fluffychainsaw.ui.viewmodels.ManageExpenseUiState
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ManageExpenseScreen(
-    modifier: Modifier = Modifier,
     uiState: ManageExpenseUiState = ManageExpenseUiState(),
     onChangeName: (String) -> Unit = {},
     onChangeCost: (String) -> Unit = {},
     onChangeType: (ExpenseType) -> Unit = {},
+    onToggleIsSelectingOneType: () -> Unit = {},
     onDelete: () -> Unit = {},
     onCancel: () -> Unit = {},
     onDone: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
+    val softwareKeyboardController = LocalSoftwareKeyboardController.current
+
     val canSubmit = listOf(uiState.name, uiState.cost).all { field -> field.isNotEmpty() }
+
+    if (uiState.isSelectingOneType) {
+        AlertDialog(
+            onDismissRequest = onToggleIsSelectingOneType,
+            title = {
+                Text(text = stringResource(R.string.manage_expense_type_placeholder))
+            },
+            text = {
+                SingleOptionSelection(
+                    selectedOption = uiState.type,
+                    options = listOf(
+                        Option(
+                            label = stringResource(R.string.expense_type_variable),
+                            value = ExpenseType.Variable
+                        ),
+                        Option(
+                            label = stringResource(R.string.expense_type_fixed),
+                            value = ExpenseType.Fixed
+                        )
+                    ),
+                    onSelectOne = { option -> onChangeType(option.value) },
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = onToggleIsSelectingOneType) {
+                    Text(text = stringResource(R.string.manage_expense_done_button))
+                }
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -51,7 +78,56 @@ fun ManageExpenseScreen(
                 onDone = onDone
             )
         }
-    ) {}
+    ) {
+        Column {
+            ActionLayout {
+                TextField(
+                    value = uiState.name,
+                    placeholder = stringResource(R.string.manage_expense_name_placeholder),
+                    onValueChange = onChangeName,
+                )
+            }
+            ActionLayout(
+                icon = {
+                    Icon(imageVector = Icons.Rounded.AttachMoney, contentDescription = null)
+                }
+            ) {
+                TextField(
+                    value = uiState.cost,
+                    placeholder = stringResource(R.string.manage_expense_cost_placeholder),
+                    onValueChange = onChangeCost,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.clearFocus()
+                            softwareKeyboardController?.hide()
+                            if (canSubmit) {
+                                onDone()
+                            }
+                        }
+                    )
+                )
+            }
+            ActionLayout(
+                icon = {
+                    Icon(imageVector = Icons.Rounded.Category, contentDescription = null)
+                },
+                trailing = {
+                    val id = when (uiState.type) {
+                        ExpenseType.Variable -> R.string.expense_type_variable
+                        else -> R.string.expense_type_fixed
+                    }
+                    Text(text = stringResource(id))
+                },
+                onClick = onToggleIsSelectingOneType
+            ) {
+                Text(text = stringResource(R.string.manage_expense_type_placeholder))
+            }
+        }
+    }
 }
 
 @Composable
@@ -66,7 +142,7 @@ private fun ManageExpenseScreenTopAppBar(
         title = {},
         navigationIcon = {
             IconButton(onClick = onCancel) {
-                Icon(imageVector = Icons.Rounded.Close, contentDescription = null)
+                Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
             }
         },
         actions = {

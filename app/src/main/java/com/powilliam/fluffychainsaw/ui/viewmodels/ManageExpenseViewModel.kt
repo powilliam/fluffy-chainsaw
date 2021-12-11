@@ -20,7 +20,8 @@ data class ManageExpenseUiState(
     val name: String = "",
     val cost: String = "",
     val type: ExpenseType = ExpenseType.Variable,
-    val viewMode: ManageExpenseViewMode = ManageExpenseViewMode.InsertingOne
+    val viewMode: ManageExpenseViewMode = ManageExpenseViewMode.InsertingOne,
+    val isSelectingOneType: Boolean = false
 )
 
 @HiltViewModel
@@ -88,6 +89,14 @@ class ManageExpenseViewModel @Inject constructor(
     fun onChangeType(newValue: ExpenseType) {
         viewModelScope.launch {
             _uiState.emit(_uiState.value.copy(type = newValue))
+        }
+    }
+
+    fun onToggleIsSelectingOneType() {
+        viewModelScope.launch {
+            with(_uiState.value) {
+                _uiState.emit(copy(isSelectingOneType = !isSelectingOneType))
+            }
         }
     }
 

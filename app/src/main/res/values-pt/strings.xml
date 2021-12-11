@@ -3,9 +3,9 @@
     <string name="expenses_search_placeholder">Buscar</string>
     <string name="expense_type_fixed">Fixa</string>
     <string name="expense_type_variable">Variável</string>
-    <string name="manage_expense_name_placeholder">Nome (Ex: Disney+)</string>
-    <string name="manage_expense_cost_placeholder">Custo</string>
-    <string name="manage_expense_type_label">Tipo da despesa</string>
+    <string name="manage_expense_name_placeholder">Adicionar nome</string>
+    <string name="manage_expense_cost_placeholder">Adicionar custo</string>
+    <string name="manage_expense_type_placeholder">Adicionar tipo</string>
     <string name="manage_expense_cancel_button">Cancelar</string>
     <string name="manage_expense_done_button">Feito</string>
 </resources>

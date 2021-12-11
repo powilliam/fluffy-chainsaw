@@ -52,6 +52,7 @@ private fun NavGraphBuilder.screens(navController: NavHostController) {
             onChangeName = viewModel::onChangeName,
             onChangeCost = viewModel::onChangeCost,
             onChangeType = viewModel::onChangeType,
+            onToggleIsSelectingOneType = viewModel::onToggleIsSelectingOneType,
             onCancel = navController::popBackStack,
             onDelete = {
                 viewModel.onDelete()
