@@ -83,6 +83,7 @@ fun ManageExpenseScreen(
             ActionLayout {
                 TextField(
                     value = uiState.name,
+                    textStyle = MaterialTheme.typography.headlineSmall,
                     placeholder = stringResource(R.string.manage_expense_name_placeholder),
                     onValueChange = onChangeName,
                 )
