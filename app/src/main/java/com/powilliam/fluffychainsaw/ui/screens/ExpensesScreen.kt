@@ -14,6 +14,7 @@ import com.powilliam.fluffychainsaw.R
 import com.powilliam.fluffychainsaw.data.entities.Expense
 import com.powilliam.fluffychainsaw.ui.composables.ContainedTextField
 import com.powilliam.fluffychainsaw.ui.composables.ExpensesList
+import com.powilliam.fluffychainsaw.ui.composables.OverviewCard
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 import com.powilliam.fluffychainsaw.ui.viewmodels.ExpensesUiState
 
@@ -32,6 +33,9 @@ fun ExpensesScreen(
                 ignoreCase = false
             ) or expense.name.contentEquals(query, ignoreCase = false)
         }
+    }
+    val totalCost = with(uiState) {
+        expenses.fold(0F) { totalCost, expense -> totalCost + expense.cost }
     }
 
     Scaffold(
@@ -59,6 +63,9 @@ fun ExpensesScreen(
                         )
                     },
                 )
+            },
+            overview = {
+                OverviewCard(totalCost = totalCost)
             }
         ) { expense ->
             onNavigateToManageExpense(expense)

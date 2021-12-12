@@ -22,6 +22,7 @@ fun ExpensesList(
     modifier: Modifier = Modifier,
     expenses: List<Expense> = emptyList(),
     stickyHeader: (@Composable () -> Unit)? = null,
+    overview: (@Composable () -> Unit)? = null,
     onNavigateToManageExpense: (Expense) -> Unit = {}
 ) {
     LazyColumn(modifier) {
@@ -30,6 +31,12 @@ fun ExpensesList(
                 ExpenseListStickyHeader {
                     composable()
                 }
+            }
+        }
+
+        overview?.let { composable ->
+            item {
+                composable()
             }
         }
 

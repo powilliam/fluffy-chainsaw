@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.powilliam.fluffychainsaw.data.entities.Expense
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
+import com.powilliam.fluffychainsaw.ui.utils.currency
 import java.text.NumberFormat
 
 @Composable
@@ -53,19 +54,8 @@ fun ExpenseCard(
                 }
                 Spacer(modifier.width(16.dp))
                 Column {
-                    val cost = try {
-                        NumberFormat
-                            .getCurrencyInstance()
-                            .also { formatter ->
-                                formatter.maximumFractionDigits = 2
-                            }
-                            .format(expense.cost)
-                    } catch (exception: NumberFormatException) {
-                        expense.cost
-                    }
-
                     Text(text = expense.name, style = MaterialTheme.typography.headlineSmall)
-                    Text(text = "$cost", style = MaterialTheme.typography.bodyMedium)
+                    Text(text = currency(expense.cost), style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }
