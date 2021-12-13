@@ -2,6 +2,7 @@ package com.powilliam.fluffychainsaw
 
 object Dependencies {
     const val junit = "junit:junit:4.13.2"
+    const val desugaringCoreLibrary = "com.android.tools:desugar_jdk_libs:1.1.5"
 
     object AndroidX {
         const val core = "androidx.core:core-ktx:1.7.0"
@@ -58,5 +59,9 @@ object Dependencies {
         const val protobufGradlePlugin = "com.google.protobuf:protobuf-gradle-plugin:0.8.18"
         const val protobufJavaLite = "com.google.protobuf:protobuf-javalite:3.8.0"
         const val protoc = "com.google.protobuf:protoc:3.8.0"
+    }
+
+    object KotlinX {
+        const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.3.1"
     }
 }

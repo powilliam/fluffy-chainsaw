@@ -14,6 +14,8 @@ android {
     compileSdk = 31
 
     defaultConfig {
+        multiDexEnabled = true
+
         applicationId = "com.powilliam.fluffychainsaw"
         minSdk = 21
         targetSdk = 31
@@ -48,6 +50,7 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -66,7 +69,7 @@ protobuf {
         artifact = Dependencies.Google.protoc
     }
     generateProtoTasks {
-       all().forEach { task ->
+        all().forEach { task ->
             task.builtins {
                 id("java") {
                     option("lite")
@@ -77,6 +80,8 @@ protobuf {
 }
 
 dependencies {
+    coreLibraryDesugaring(Dependencies.desugaringCoreLibrary)
+
     implementation(Dependencies.AndroidX.core)
     implementation(Dependencies.AndroidX.appCompat)
     implementation(Dependencies.AndroidX.activityCompose)
@@ -104,6 +109,8 @@ dependencies {
 
     implementation(Dependencies.Google.protobufJavaLite)
     implementation(Dependencies.AndroidX.DataStore.proto)
+
+    implementation(Dependencies.KotlinX.datetime)
 
     testImplementation(Dependencies.junit)
     testImplementation(Dependencies.AndroidX.Room.test)
