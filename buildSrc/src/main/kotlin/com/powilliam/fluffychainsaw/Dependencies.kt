@@ -47,6 +47,10 @@ object Dependencies {
             const val kapt = "androidx.room:room-compiler:${Versions.roomVersion}"
             const val test = "androidx.room:room-testing:${Versions.roomVersion}"
         }
+
+        object DataStore {
+            const val proto = "androidx.datastore:datastore:1.0.0"
+        }
     }
 
     object Google {

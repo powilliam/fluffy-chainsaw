@@ -85,6 +85,8 @@ dependencies {
     implementation(Dependencies.AndroidX.Room.ktx)
     kapt(Dependencies.AndroidX.Room.kapt)
 
+    implementation(Dependencies.AndroidX.DataStore.proto)
+
     testImplementation(Dependencies.junit)
     testImplementation(Dependencies.AndroidX.Room.test)
     androidTestImplementation(Dependencies.AndroidX.test)
