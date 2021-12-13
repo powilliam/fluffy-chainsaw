@@ -57,7 +57,6 @@ fun OverviewCard(
                         val calendarConstraints = CalendarConstraints.Builder()
                             .setValidator(DateValidatorPointForward.now())
                             .setStart(today)
-                            .setEnd(today)
                             .build()
                         val picker = MaterialDatePicker.Builder.datePicker()
                             .setTitleText("Add month ending")
