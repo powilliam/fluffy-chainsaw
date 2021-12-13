@@ -36,7 +36,9 @@ fun ExpensesList(
 
         overview?.let { composable ->
             item {
-                composable()
+                Box(modifier.padding(16.dp)) {
+                    composable()
+                }
             }
         }
 
