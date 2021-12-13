@@ -24,6 +24,7 @@ fun ExpensesScreen(
     modifier: Modifier = Modifier,
     uiState: ExpensesUiState = ExpensesUiState(),
     onSearch: (String) -> Unit = {},
+    onSelectMonthEnding: (Long) -> Unit = {},
     onNavigateToManageExpense: (Expense?) -> Unit = {}
 ) {
     Scaffold(
@@ -53,7 +54,10 @@ fun ExpensesScreen(
                 )
             },
             overview = {
-                OverviewCard(totalCost = uiState.totalCost)
+                OverviewCard(
+                    totalCost = uiState.totalCost,
+                    onSelectMonthEnding = onSelectMonthEnding
+                )
             }
         ) { expense ->
             onNavigateToManageExpense(expense)
