@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.android.material.datepicker.CalendarConstraints
@@ -21,6 +22,7 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 import com.powilliam.fluffychainsaw.ui.utils.currency
+import com.powilliam.fluffychainsaw.R
 
 @Composable
 fun OverviewCard(
@@ -43,7 +45,10 @@ fun OverviewCard(
                     .padding(start = 16.dp, end = 16.dp, bottom = 8.dp, top = 16.dp)
             ) {
                 Text(text = currency(totalCost), style = MaterialTheme.typography.displaySmall)
-                Text(text = "23 days left", style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    text = stringResource(R.string.expenses_screen_days_until_month_ending, 23),
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
             Divider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1F))
             Row(
@@ -68,7 +73,7 @@ fun OverviewCard(
                                 .setStart(today)
                                 .build()
                             val picker = MaterialDatePicker.Builder.datePicker()
-                                .setTitleText("Add month ending")
+                                .setTitleText(activity.getString(R.string.expenses_screen_add_month_ending_date))
                                 .setCalendarConstraints(calendarConstraints)
                                 .setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
                                 .build()
@@ -80,7 +85,7 @@ fun OverviewCard(
                         }
                     }
                 ) {
-                    Text(text = "Add month ending")
+                    Text(text = stringResource(R.string.expenses_screen_add_month_ending_date))
                 }
             }
         }

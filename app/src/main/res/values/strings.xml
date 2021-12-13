@@ -2,6 +2,8 @@
     <string name="app_name" translatable="false">Fluffy Chainsaw</string>
     <string name="expenses_screen_title">Expenses</string>
     <string name="expenses_search_placeholder">Search</string>
+    <string name="expenses_screen_add_month_ending_date">Add month ending date</string>
+    <string name="expenses_screen_days_until_month_ending">%d days until month ending</string>
     <string name="expense_type_fixed">Fixed</string>
     <string name="expense_type_variable">Variable</string>
     <string name="manage_expense_name_placeholder">Add name</string>
