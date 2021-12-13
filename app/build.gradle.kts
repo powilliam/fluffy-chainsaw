@@ -1,3 +1,4 @@
+import com.google.protobuf.gradle.*
 import com.powilliam.fluffychainsaw.Dependencies
 import com.powilliam.fluffychainsaw.Versions
 
@@ -6,6 +7,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    id("com.google.protobuf")
 }
 
 android {
@@ -59,6 +61,21 @@ android {
     }
 }
 
+protobuf {
+    protoc {
+        artifact = Dependencies.Google.protoc
+    }
+    generateProtoTasks {
+       all().forEach { task ->
+            task.builtins {
+                id("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
+
 dependencies {
     implementation(Dependencies.AndroidX.core)
     implementation(Dependencies.AndroidX.appCompat)
@@ -85,6 +102,7 @@ dependencies {
     implementation(Dependencies.AndroidX.Room.ktx)
     kapt(Dependencies.AndroidX.Room.kapt)
 
+    implementation(Dependencies.Google.protobufJavaLite)
     implementation(Dependencies.AndroidX.DataStore.proto)
 
     testImplementation(Dependencies.junit)

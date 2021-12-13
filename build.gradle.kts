@@ -2,6 +2,7 @@
 buildscript {
     dependencies {
         classpath(com.powilliam.fluffychainsaw.Dependencies.AndroidX.Hilt.plugin)
+        classpath(com.powilliam.fluffychainsaw.Dependencies.Google.protobufGradlePlugin)
     }
 }
 

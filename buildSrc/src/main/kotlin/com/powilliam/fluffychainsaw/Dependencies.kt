@@ -55,5 +55,8 @@ object Dependencies {
 
     object Google {
         const val materialDesign = "com.google.android.material:material:1.5.0-beta01"
+        const val protobufGradlePlugin = "com.google.protobuf:protobuf-gradle-plugin:0.8.18"
+        const val protobufJavaLite = "com.google.protobuf:protobuf-javalite:3.8.0"
+        const val protoc = "com.google.protobuf:protoc:3.8.0"
     }
 }
