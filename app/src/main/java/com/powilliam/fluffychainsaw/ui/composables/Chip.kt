@@ -19,7 +19,7 @@ import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 @Composable
 fun Chip(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.surface,
+    color: Color = MaterialTheme.colorScheme.primaryContainer,
     tonalElevation: Dp = 0.dp,
     onClick: () -> Unit = {},
     leading: (@Composable () -> Unit)? = null,

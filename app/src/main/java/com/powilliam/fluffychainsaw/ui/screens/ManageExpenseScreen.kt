@@ -115,7 +115,14 @@ fun ManageExpenseScreen(
                     Icon(imageVector = Icons.Rounded.Category, contentDescription = null)
                 },
                 trailing = {
-                    Text(text = stringResource(uiState.type.stringResourceId()))
+                    val color = when (uiState.type) {
+                        ExpenseType.Variable -> MaterialTheme.colorScheme.primaryContainer
+                        ExpenseType.Fixed -> MaterialTheme.colorScheme.secondaryContainer
+                    }
+
+                    Chip(color = color) {
+                        Text(text = stringResource(uiState.type.stringResourceId()))
+                    }
                 },
                 onClick = onToggleIsSelectingOneType
             ) {
