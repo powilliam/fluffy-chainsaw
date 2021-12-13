@@ -17,8 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 import com.powilliam.fluffychainsaw.R
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
+import com.powilliam.fluffychainsaw.data.entities.stringResourceId
 import com.powilliam.fluffychainsaw.ui.composables.*
-import com.powilliam.fluffychainsaw.ui.constants.ManageExpenseViewMode
 import com.powilliam.fluffychainsaw.ui.viewmodels.ManageExpenseUiState
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -35,8 +35,6 @@ fun ManageExpenseScreen(
 ) {
     val focusManager = LocalFocusManager.current
     val softwareKeyboardController = LocalSoftwareKeyboardController.current
-
-    val canSubmit = listOf(uiState.name, uiState.cost).all { field -> field.isNotEmpty() }
 
     if (uiState.isSelectingOneType) {
         AlertDialog(
@@ -71,8 +69,8 @@ fun ManageExpenseScreen(
     Scaffold(
         topBar = {
             ManageExpenseScreenTopAppBar(
-                canSubmit = canSubmit,
-                canDelete = uiState.viewMode == ManageExpenseViewMode.ViewingOne,
+                canSubmit = uiState.canSubmit,
+                canDelete = uiState.canDelete,
                 onCancel = onCancel,
                 onDelete = onDelete,
                 onDone = onDone
@@ -105,7 +103,7 @@ fun ManageExpenseScreen(
                         onDone = {
                             focusManager.clearFocus()
                             softwareKeyboardController?.hide()
-                            if (canSubmit) {
+                            if (uiState.canSubmit) {
                                 onDone()
                             }
                         }
@@ -117,11 +115,7 @@ fun ManageExpenseScreen(
                     Icon(imageVector = Icons.Rounded.Category, contentDescription = null)
                 },
                 trailing = {
-                    val id = when (uiState.type) {
-                        ExpenseType.Variable -> R.string.expense_type_variable
-                        else -> R.string.expense_type_fixed
-                    }
-                    Text(text = stringResource(id))
+                    Text(text = stringResource(uiState.type.stringResourceId()))
                 },
                 onClick = onToggleIsSelectingOneType
             ) {

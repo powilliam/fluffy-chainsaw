@@ -2,10 +2,18 @@ package com.powilliam.fluffychainsaw.data.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.powilliam.fluffychainsaw.R
 
 enum class ExpenseType {
     Fixed,
     Variable
+}
+
+fun ExpenseType.stringResourceId(): Int {
+    return when (this) {
+        ExpenseType.Variable -> R.string.expense_type_variable
+        ExpenseType.Fixed -> R.string.expense_type_fixed
+    }
 }
 
 @Entity

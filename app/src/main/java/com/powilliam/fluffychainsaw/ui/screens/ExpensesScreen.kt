@@ -26,18 +26,6 @@ fun ExpensesScreen(
     onSearch: (String) -> Unit = {},
     onNavigateToManageExpense: (Expense?) -> Unit = {}
 ) {
-    val filteredExpenses = with(uiState) {
-        expenses.filter { expense ->
-            expense.name.contains(
-                query,
-                ignoreCase = false
-            ) or expense.name.contentEquals(query, ignoreCase = false)
-        }
-    }
-    val totalCost = with(uiState) {
-        expenses.fold(0F) { totalCost, expense -> totalCost + expense.cost }
-    }
-
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -49,7 +37,7 @@ fun ExpensesScreen(
     ) {
         ExpensesList(
             modifier.fillMaxSize(),
-            expenses = filteredExpenses,
+            expenses = uiState.filteredExpenses,
             stickyHeader = {
                 ContainedTextField(
                     value = uiState.query,
@@ -65,7 +53,7 @@ fun ExpensesScreen(
                 )
             },
             overview = {
-                OverviewCard(totalCost = totalCost)
+                OverviewCard(totalCost = uiState.totalCost)
             }
         ) { expense ->
             onNavigateToManageExpense(expense)

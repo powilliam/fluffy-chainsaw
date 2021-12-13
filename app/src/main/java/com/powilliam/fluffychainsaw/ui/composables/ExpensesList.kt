@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.powilliam.fluffychainsaw.R
 import com.powilliam.fluffychainsaw.data.entities.Expense
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
+import com.powilliam.fluffychainsaw.data.entities.stringResourceId
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -45,12 +45,7 @@ fun ExpensesList(
             .onEach { expenseByType ->
                 item(expenseByType.key) {
                     ExpenseListItemHeader {
-                        val id = when (expenseByType.key) {
-                            ExpenseType.Fixed -> R.string.expense_type_fixed
-                            else -> R.string.expense_type_variable
-                        }
-
-                        Text(text = stringResource(id))
+                        Text(text = stringResource(expenseByType.key.stringResourceId()))
                     }
                 }
 

@@ -22,7 +22,10 @@ data class ManageExpenseUiState(
     val type: ExpenseType = ExpenseType.Variable,
     val viewMode: ManageExpenseViewMode = ManageExpenseViewMode.InsertingOne,
     val isSelectingOneType: Boolean = false
-)
+) {
+    val canSubmit = listOf(name, cost).all { field -> field.isNotEmpty() }
+    val canDelete = viewMode == ManageExpenseViewMode.ViewingOne
+}
 
 @HiltViewModel
 class ManageExpenseViewModel @Inject constructor(

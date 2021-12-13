@@ -12,7 +12,15 @@ import javax.inject.Inject
 data class ExpensesUiState(
     val expenses: List<Expense> = emptyList(),
     val query: String = ""
-)
+) {
+    val filteredExpenses = expenses.filter { expense ->
+        expense.name.contains(
+            query,
+            ignoreCase = false
+        ) or expense.name.contentEquals(query, ignoreCase = false)
+    }
+    val totalCost = expenses.fold(0F) { totalCost, expense -> totalCost + expense.cost }
+}
 
 @HiltViewModel
 class ExpensesViewModel @Inject constructor(
