@@ -24,8 +24,11 @@ data class ExpensesUiState(
         ) or expense.name.contentEquals(query, ignoreCase = false)
     }
     val totalCost = expenses.fold(0F) { totalCost, expense -> totalCost + expense.cost }
-    val canDisplayDaysUntilMonthEnding = monthEndingInUtcMilliseconds > 0
     val daysUntilMonthEnding = daysUntil(monthEndingInUtcMilliseconds)
+    val canDisplayDaysUntilMonthEnding = listOf(
+        monthEndingInUtcMilliseconds,
+        daysUntilMonthEnding.toLong()
+    ).all { epochMilliseconds -> epochMilliseconds > 0 }
 }
 
 @HiltViewModel

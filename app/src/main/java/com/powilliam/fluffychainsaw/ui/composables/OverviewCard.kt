@@ -77,6 +77,11 @@ fun OverviewCard(
                     onClick = {
                         (context as AppCompatActivity).let { activity ->
                             val today = MaterialDatePicker.todayInUtcMilliseconds()
+                            val initialSelection = if(uiState.canDisplayDaysUntilMonthEnding) {
+                                uiState.monthEndingInUtcMilliseconds
+                            } else {
+                                today
+                            }
                             val calendarConstraints = CalendarConstraints.Builder()
                                 .setValidator(DateValidatorPointForward.now())
                                 .setStart(today)
@@ -84,6 +89,7 @@ fun OverviewCard(
                             val picker = MaterialDatePicker.Builder.datePicker()
                                 .setTitleText(activity.getString(R.string.expenses_screen_add_month_ending_date))
                                 .setCalendarConstraints(calendarConstraints)
+                                .setSelection(initialSelection)
                                 .setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
                                 .build()
 
