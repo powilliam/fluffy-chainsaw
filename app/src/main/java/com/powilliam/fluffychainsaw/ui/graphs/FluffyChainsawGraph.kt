@@ -1,6 +1,5 @@
 package com.powilliam.fluffychainsaw.ui.graphs
 
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
@@ -30,12 +29,7 @@ private fun NavGraphBuilder.screens(navController: NavHostController) {
         ExpensesScreen(
             uiState = uiState,
             onSearch = viewModel::onSearch,
-            onSelectMonthEnding = { monthEndingInUtcMilliseconds ->
-                Log.i(
-                    "OnSelectMonthEnding",
-                    monthEndingInUtcMilliseconds.toString()
-                )
-            }
+            onSelectMonthEnding = viewModel::onSelectMonthEnding
         ) { expense ->
             navController.navigate(Screen.ManageExpense.navigate(expense)) {
                 popUpTo(Screen.ManageExpense.route)

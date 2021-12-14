@@ -39,4 +39,16 @@ abstract class UseCasesModule {
     abstract fun bindDeleteOneExpenseUseCase(
         deleteOneExpenseUseCaseImpl: DeleteOneExpenseUseCaseImpl
     ): DeleteOneExpenseUseCase
+
+    @ViewModelScoped
+    @Binds
+    abstract fun bindGetMonthEndingFromSettingsDataStoreUseCase(
+        getMonthEndingFromSettingsDataStoreUseCaseImpl: GetMonthEndingFromSettingsDataStoreUseCaseImpl
+    ): GetMonthEndingFromSettingsDataStoreUseCase
+
+    @ViewModelScoped
+    @Binds
+    abstract fun bindUpdateMonthEndingFromSettingsDataStoreUseCase(
+        updateMonthEndingFromSettingsDataStoreUseCaseImpl: UpdateMonthEndingFromSettingsDataStoreUseCaseImpl
+    ): UpdateMonthEndingFromSettingsDataStoreUseCase
 }

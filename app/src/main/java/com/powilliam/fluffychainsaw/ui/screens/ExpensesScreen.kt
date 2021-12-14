@@ -55,7 +55,7 @@ fun ExpensesScreen(
             },
             overview = {
                 OverviewCard(
-                    totalCost = uiState.totalCost,
+                    uiState = uiState,
                     onSelectMonthEnding = onSelectMonthEnding
                 )
             }

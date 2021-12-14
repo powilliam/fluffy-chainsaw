@@ -23,11 +23,12 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 import com.powilliam.fluffychainsaw.ui.utils.currency
 import com.powilliam.fluffychainsaw.R
+import com.powilliam.fluffychainsaw.ui.viewmodels.ExpensesUiState
 
 @Composable
 fun OverviewCard(
     modifier: Modifier = Modifier,
-    totalCost: Float,
+    uiState: ExpensesUiState = ExpensesUiState(),
     onSelectMonthEnding: (Long) -> Unit = {}
 ) {
     val context = LocalContext.current
@@ -44,11 +45,19 @@ fun OverviewCard(
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, bottom = 8.dp, top = 16.dp)
             ) {
-                Text(text = currency(totalCost), style = MaterialTheme.typography.displaySmall)
                 Text(
-                    text = stringResource(R.string.expenses_screen_days_until_month_ending, 23),
-                    style = MaterialTheme.typography.bodyLarge
+                    text = currency(uiState.totalCost),
+                    style = MaterialTheme.typography.displaySmall
                 )
+                if (uiState.canDisplayDaysUntilMonthEnding) {
+                    Text(
+                        text = stringResource(
+                            R.string.expenses_screen_days_until_month_ending,
+                            uiState.daysUntilMonthEnding
+                        ),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
             }
             Divider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1F))
             Row(
@@ -96,6 +105,6 @@ fun OverviewCard(
 @Composable
 private fun OverviewCardPreview() {
     FluffyChainsawTheme {
-        OverviewCard(totalCost = 89.97F)
+        OverviewCard()
     }
 }
