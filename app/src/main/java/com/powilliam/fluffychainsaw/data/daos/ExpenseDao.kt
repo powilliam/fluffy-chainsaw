@@ -24,4 +24,7 @@ interface ExpenseDao {
 
     @Query("DELETE FROM Expense WHERE expenseId = :id")
     suspend fun deleteOneExpense(id: Long)
+
+    @Query("DELETE FROM Expense WHERE type = :type")
+    suspend fun deleteAllExpensesByType(type: ExpenseType = ExpenseType.Variable)
 }
