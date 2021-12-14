@@ -49,15 +49,13 @@ fun OverviewCard(
                     text = currency(uiState.totalCost),
                     style = MaterialTheme.typography.displaySmall
                 )
-                if (uiState.canDisplayDaysUntilMonthEnding) {
-                    Text(
-                        text = stringResource(
-                            R.string.expenses_screen_days_until_month_ending,
-                            uiState.daysUntilMonthEnding
-                        ),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
+                Text(
+                    text = stringResource(
+                        uiState.daysUntilMonthEndingStringResourceId,
+                        uiState.daysUntilMonthEnding
+                    ),
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
             Divider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1F))
             Row(
@@ -77,7 +75,7 @@ fun OverviewCard(
                     onClick = {
                         (context as AppCompatActivity).let { activity ->
                             val today = MaterialDatePicker.todayInUtcMilliseconds()
-                            val initialSelection = if(uiState.canDisplayDaysUntilMonthEnding) {
+                            val initialSelection = if (uiState.canDisplayDaysUntilMonthEnding) {
                                 uiState.monthEndingInUtcMilliseconds
                             } else {
                                 today

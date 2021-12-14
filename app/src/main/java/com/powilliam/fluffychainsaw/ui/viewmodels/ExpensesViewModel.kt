@@ -2,6 +2,7 @@ package com.powilliam.fluffychainsaw.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.powilliam.fluffychainsaw.R
 import com.powilliam.fluffychainsaw.data.entities.Expense
 import com.powilliam.fluffychainsaw.data.usecases.GetAllExpensesUseCase
 import com.powilliam.fluffychainsaw.data.usecases.GetMonthEndingFromSettingsDataStoreUseCase
@@ -25,10 +26,12 @@ data class ExpensesUiState(
     }
     val totalCost = expenses.fold(0F) { totalCost, expense -> totalCost + expense.cost }
     val daysUntilMonthEnding = daysUntil(monthEndingInUtcMilliseconds)
-    val canDisplayDaysUntilMonthEnding = listOf(
-        monthEndingInUtcMilliseconds,
-        daysUntilMonthEnding.toLong()
-    ).all { epochMilliseconds -> epochMilliseconds > 0 }
+    val canDisplayDaysUntilMonthEnding = monthEndingInUtcMilliseconds > 0
+    val daysUntilMonthEndingStringResourceId = when {
+        !canDisplayDaysUntilMonthEnding -> R.string.expenses_screen_month_ending_is_not_defined
+        daysUntilMonthEnding == 0 && canDisplayDaysUntilMonthEnding -> R.string.expenses_screen_today_is_the_month_ending
+        else -> R.string.expenses_screen_days_until_month_ending
+    }
 }
 
 @HiltViewModel

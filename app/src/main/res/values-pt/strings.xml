@@ -2,7 +2,9 @@
     <string name="expenses_screen_title">Despesas</string>
     <string name="expenses_search_placeholder">Buscar</string>
     <string name="expenses_screen_add_month_ending_date">Adicionar data do final do mês</string>
-    <string name="expenses_screen_days_until_month_ending">%d dias até o final do mês</string>
+    <string name="expenses_screen_days_until_month_ending">%d dias até o final do mês 😱</string>
+    <string name="expenses_screen_today_is_the_month_ending">Hoje é o dia em que se encerra mais um ciclo mensal 🥳. \nNós cuidaremos de tudo. Aguarde!</string>
+    <string name="expenses_screen_month_ending_is_not_defined">Parece que tu ainda não definiu uma data para o próximo fim de mês 🤔. \nAdicione uma data e assim daremos um jeito nas suas despesas variáveis automaticamente para você.</string>
     <string name="expense_type_fixed">Fixa</string>
     <string name="expense_type_variable">Variável</string>
     <string name="manage_expense_name_placeholder">Adicionar nome</string>
