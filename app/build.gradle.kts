@@ -112,6 +112,10 @@ dependencies {
 
     implementation(Dependencies.KotlinX.datetime)
 
+    implementation(Dependencies.AndroidX.WorkManager.kotlinAndCoroutines)
+    implementation(Dependencies.AndroidX.Hilt.hiltWork)
+    kapt(Dependencies.AndroidX.Hilt.hiltWorkKapt)
+
     testImplementation(Dependencies.junit)
     testImplementation(Dependencies.AndroidX.Room.test)
     androidTestImplementation(Dependencies.AndroidX.test)

@@ -36,6 +36,8 @@ object Dependencies {
             const val hilt = "com.google.dagger:hilt-android:${Versions.hiltVersion}"
             const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
             const val kapt = "com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}"
+            const val hiltWork = "androidx.hilt:hilt-work:1.0.0"
+            const val hiltWorkKapt = "androidx.hilt:hilt-compiler:1.0.0"
         }
 
         object Navigation {
@@ -51,6 +53,10 @@ object Dependencies {
 
         object DataStore {
             const val proto = "androidx.datastore:datastore:1.0.0"
+        }
+
+        object WorkManager {
+            const val kotlinAndCoroutines = "androidx.work:work-runtime-ktx:${Versions.workVersion}"
         }
     }
 
