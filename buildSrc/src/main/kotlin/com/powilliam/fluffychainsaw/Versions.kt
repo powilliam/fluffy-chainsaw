@@ -9,4 +9,5 @@ object Versions {
     const val hiltVersion = "2.38.1"
     const val roomVersion = "2.3.0"
     const val workVersion = "2.7.1"
+    const val emoji2Version = "1.0.0"
 }

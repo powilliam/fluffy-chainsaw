@@ -58,6 +58,12 @@ object Dependencies {
         object WorkManager {
             const val kotlinAndCoroutines = "androidx.work:work-runtime-ktx:${Versions.workVersion}"
         }
+
+        object Emoji2 {
+            const val emoji = "androidx.emoji2:emoji2:${Versions.emoji2Version}"
+            const val views = "androidx.emoji2:emoji2-views:${Versions.emoji2Version}"
+            const val viewsHelper = "androidx.emoji2:emoji2-views-helper:${Versions.emoji2Version}"
+        }
     }
 
     object Google {

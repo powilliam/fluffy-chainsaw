@@ -116,6 +116,10 @@ dependencies {
     implementation(Dependencies.AndroidX.Hilt.hiltWork)
     kapt(Dependencies.AndroidX.Hilt.hiltWorkKapt)
 
+    implementation(Dependencies.AndroidX.Emoji2.emoji)
+    implementation(Dependencies.AndroidX.Emoji2.views)
+    implementation(Dependencies.AndroidX.Emoji2.viewsHelper)
+
     testImplementation(Dependencies.junit)
     testImplementation(Dependencies.AndroidX.Room.test)
     androidTestImplementation(Dependencies.AndroidX.test)
