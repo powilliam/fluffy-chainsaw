@@ -19,7 +19,7 @@ fun FluffyChainsawTheme(
     val colorScheme = if (isDynamicColorSchemeSupported) {
         dynamicDarkColorScheme(context)
     } else {
-        darkColorScheme()
+        DarkColorScheme
     }
 
     MaterialTheme(colorScheme, NotoSansTypography) {

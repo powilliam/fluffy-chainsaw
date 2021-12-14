@@ -30,6 +30,8 @@ fun ExpensesScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.primary,
                 onClick = { onNavigateToManageExpense(null) }
             ) {
                 Icon(imageVector = Icons.Rounded.AttachMoney, contentDescription = null)

@@ -114,19 +114,9 @@ fun ManageExpenseScreen(
                 icon = {
                     Icon(imageVector = Icons.Rounded.Category, contentDescription = null)
                 },
-                trailing = {
-                    val color = when (uiState.type) {
-                        ExpenseType.Variable -> MaterialTheme.colorScheme.primaryContainer
-                        ExpenseType.Fixed -> MaterialTheme.colorScheme.secondaryContainer
-                    }
-
-                    Chip(color = color) {
-                        Text(text = stringResource(uiState.type.stringResourceId()))
-                    }
-                },
                 onClick = onToggleIsSelectingOneType
             ) {
-                Text(text = stringResource(R.string.manage_expense_type_placeholder))
+                Text(text = stringResource(uiState.type.stringResourceId()))
             }
         }
     }

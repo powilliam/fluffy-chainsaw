@@ -1,5 +1,6 @@
 package com.powilliam.fluffychainsaw.ui.composables
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,30 +20,33 @@ import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 @Composable
 fun Chip(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.primaryContainer,
+    color: Color = MaterialTheme.colorScheme.surface,
+    borderColor: Color = MaterialTheme.colorScheme.outline,
     tonalElevation: Dp = 0.dp,
     onClick: () -> Unit = {},
     leading: (@Composable () -> Unit)? = null,
     content: @Composable RowScope.() -> Unit = {}
 ) {
-    val endPadding = if (leading != null) 12.dp else 4.dp
+    val horizontalPadding = if (leading != null) 8.dp else 16.dp
 
     Surface(
         color = color,
         shape = RoundedCornerShape(8.dp),
+        border = BorderStroke(1.dp, borderColor),
         tonalElevation = tonalElevation
     ) {
         Row(
             modifier
                 .clickable(onClick = onClick)
-                .padding(start = 4.dp, end = endPadding, top = 4.dp, bottom = 4.dp),
+                .height(32.dp)
+                .padding(horizontal = horizontalPadding),
             verticalAlignment = Alignment.CenterVertically
         ) {
             leading?.let { composable ->
-                Box(modifier.size(24.dp)) {
+                Box(modifier.size(18.dp)) {
                     composable()
                 }
-                Spacer(modifier.width(4.dp))
+                Spacer(modifier.width(8.dp))
             }
 
             ProvideTextStyle(MaterialTheme.typography.labelLarge) {

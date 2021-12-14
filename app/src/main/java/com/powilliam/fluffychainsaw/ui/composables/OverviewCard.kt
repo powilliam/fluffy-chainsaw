@@ -49,6 +49,7 @@ fun OverviewCard(
                     text = currency(uiState.totalCost),
                     style = MaterialTheme.typography.displaySmall
                 )
+                Spacer(modifier.height(4.dp))
                 Text(
                     text = stringResource(
                         uiState.daysUntilMonthEndingStringResourceId,
@@ -65,11 +66,11 @@ fun OverviewCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Chip(
-                    color = MaterialTheme.colorScheme.primaryContainer,
                     leading = {
                         Icon(
                             imageVector = Icons.Rounded.Schedule,
-                            contentDescription = null
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     },
                     onClick = {

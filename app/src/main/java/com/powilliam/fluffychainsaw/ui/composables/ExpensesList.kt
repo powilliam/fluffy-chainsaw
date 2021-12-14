@@ -65,14 +65,12 @@ private fun ExpenseListStickyHeader(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    Surface(modifier.fillMaxWidth()) {
-        Box(
-            modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-        ) {
-            content()
-        }
+    Box(
+        modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+    ) {
+        content()
     }
 }
 
@@ -85,7 +83,7 @@ private fun ExpenseListItemHeader(
         Row(
             modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                .padding(start = 16.dp, end = 16.dp, top = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             ProvideTextStyle(
