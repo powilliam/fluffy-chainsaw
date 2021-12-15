@@ -3,7 +3,7 @@ package com.powilliam.fluffychainsaw.di
 import android.content.Context
 import androidx.room.Room
 import com.powilliam.fluffychainsaw.data.daos.ExpenseDao
-import com.powilliam.fluffychainsaw.data.databases.FluffyChainsawDatabase
+import com.powilliam.fluffychainsaw.data.persistence.FluffyChainsawDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object FluffyChainsawDatabaseModule {
+object PersistenceModule {
     @Singleton
     @Provides
     fun provideFluffyChainsawDatabase(
@@ -24,11 +24,5 @@ object FluffyChainsawDatabaseModule {
             FluffyChainsawDatabase::class.java,
             "fluffychainsaw.db"
         ).build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideExpenseDao(database: FluffyChainsawDatabase): ExpenseDao {
-        return database.expenseDao()
     }
 }

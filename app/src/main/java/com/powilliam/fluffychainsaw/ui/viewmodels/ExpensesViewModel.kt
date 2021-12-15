@@ -4,9 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.powilliam.fluffychainsaw.R
 import com.powilliam.fluffychainsaw.data.entities.Expense
-import com.powilliam.fluffychainsaw.data.usecases.GetAllExpensesUseCase
-import com.powilliam.fluffychainsaw.data.usecases.GetMonthEndingFromSettingsDataStoreUseCase
-import com.powilliam.fluffychainsaw.data.usecases.UpdateMonthEndingFromSettingsDataStoreUseCase
+import com.powilliam.fluffychainsaw.data.repositories.ExpensesRepository
+import com.powilliam.fluffychainsaw.data.repositories.SettingsRepository
 import com.powilliam.fluffychainsaw.ui.utils.daysUntil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -36,22 +35,21 @@ data class ExpensesUiState(
 
 @HiltViewModel
 class ExpensesViewModel @Inject constructor(
-    private val getAllExpensesUseCase: GetAllExpensesUseCase,
-    private val getMonthEndingFromSettingsDataStoreUseCase: GetMonthEndingFromSettingsDataStoreUseCase,
-    private val updateMonthEndingFromSettingsDataStoreUseCase: UpdateMonthEndingFromSettingsDataStoreUseCase
+    private val expensesRepository: ExpensesRepository,
+    private val settingsRepository: SettingsRepository
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<ExpensesUiState> = MutableStateFlow(ExpensesUiState())
     val uiState: StateFlow<ExpensesUiState> = _uiState
 
     init {
         viewModelScope.launch {
-            val expensesFlow = getAllExpensesUseCase.execute()
-            val monthEndingFlow = getMonthEndingFromSettingsDataStoreUseCase.execute()
+            val expensesFlow = expensesRepository.getAllExpenses()
+            val settingsFlow = settingsRepository.getSettings()
 
-            expensesFlow.combine(monthEndingFlow) { expenses, monthEndingInUtcMilliseconds ->
+            expensesFlow.combine(settingsFlow) { expenses, settings ->
                 ExpensesUiState(
                     expenses = expenses,
-                    monthEndingInUtcMilliseconds = monthEndingInUtcMilliseconds
+                    monthEndingInUtcMilliseconds = settings.monthEndingInUtcMilliseconds
                 )
             }.collect(_uiState::emit)
         }
@@ -67,7 +65,7 @@ class ExpensesViewModel @Inject constructor(
 
     fun onSelectMonthEnding(monthEndingInUtcMilliseconds: Long) {
         viewModelScope.launch {
-            updateMonthEndingFromSettingsDataStoreUseCase.execute(monthEndingInUtcMilliseconds)
+            settingsRepository.updateSettings(monthEndingInUtcMilliseconds = monthEndingInUtcMilliseconds)
         }
     }
 }

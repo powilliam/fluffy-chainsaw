@@ -1,4 +1,4 @@
-package com.powilliam.fluffychainsaw.data.databases
+package com.powilliam.fluffychainsaw.data.persistence
 
 import android.content.Context
 import androidx.datastore.core.CorruptionException

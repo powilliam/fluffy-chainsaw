@@ -1,4 +1,4 @@
-package com.powilliam.fluffychainsaw.data.databases
+package com.powilliam.fluffychainsaw.data.persistence
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

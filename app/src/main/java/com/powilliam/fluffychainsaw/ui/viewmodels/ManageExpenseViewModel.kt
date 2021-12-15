@@ -4,10 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.powilliam.fluffychainsaw.data.entities.Expense
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
-import com.powilliam.fluffychainsaw.data.usecases.DeleteOneExpenseUseCase
-import com.powilliam.fluffychainsaw.data.usecases.GetOneExpenseUseCase
-import com.powilliam.fluffychainsaw.data.usecases.InsertManyExpensesUseCase
-import com.powilliam.fluffychainsaw.data.usecases.UpdateOneExpenseUseCase
+import com.powilliam.fluffychainsaw.data.repositories.ExpensesRepository
 import com.powilliam.fluffychainsaw.ui.constants.ManageExpenseViewMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,10 +26,7 @@ data class ManageExpenseUiState(
 
 @HiltViewModel
 class ManageExpenseViewModel @Inject constructor(
-    private val getOneExpenseUseCase: GetOneExpenseUseCase,
-    private val updateOneExpenseUseCase: UpdateOneExpenseUseCase,
-    private val insertManyExpensesUseCase: InsertManyExpensesUseCase,
-    private val deleteOneExpenseUseCase: DeleteOneExpenseUseCase
+    private val expensesRepository: ExpensesRepository
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<ManageExpenseUiState> = MutableStateFlow(
         ManageExpenseUiState()
@@ -53,7 +47,7 @@ class ManageExpenseViewModel @Inject constructor(
     fun onDelete() {
         viewModelScope.launch {
             try {
-                deleteOneExpenseUseCase.execute(_uiState.value.expenseId)
+                expensesRepository.deleteOneExpense(_uiState.value.expenseId)
             } catch (exception: Exception) {
             }
         }
@@ -62,7 +56,7 @@ class ManageExpenseViewModel @Inject constructor(
     fun onSetUiStateBasedOnViewMode(viewMode: String?, expenseId: Long?) {
         when {
             isViewingOne(viewMode, expenseId) -> viewModelScope.launch {
-                val expense = getOneExpenseUseCase.execute(expenseId!!)
+                val expense = expensesRepository.getOneExpense(expenseId!!)
                 _uiState.emit(
                     ManageExpenseUiState(
                         expenseId = expense.expenseId,
@@ -114,14 +108,14 @@ class ManageExpenseViewModel @Inject constructor(
                 cost = this.cost.toFloat(),
                 type = this.type
             )
-            insertManyExpensesUseCase.execute(expense)
+            expensesRepository.insertManyExpenses(expense)
         } catch (exception: Exception) {
         }
     }
 
     private suspend fun ManageExpenseUiState.onUpdate() {
         try {
-            updateOneExpenseUseCase.execute(
+            expensesRepository.updateOneExpense(
                 id = this.expenseId,
                 name = this.name,
                 cost = this.cost.toFloat(),
