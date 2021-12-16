@@ -51,7 +51,10 @@ fun ExpensesList(
                     }
                 }
 
-                items(expenseByType.value, key = { expense -> expense.expenseId }) { expense ->
+                items(
+                    expenseByType.value,
+                    key = { expense -> "${expense.expenseId}-${expense.name}" }
+                ) { expense ->
                     ExpenseCard(expense = expense) {
                         onNavigateToManageExpense(expense)
                     }
