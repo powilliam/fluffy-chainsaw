@@ -35,12 +35,22 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = File("${rootDir.absolutePath}/fluffychainsaw.keystore")
+            storePassword = "123456"
+            keyAlias = "fluffychainsawalias"
+            keyPassword = "123456"
+        }
+    }
+
     buildFeatures {
         compose = true
     }
 
     buildTypes {
         getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
