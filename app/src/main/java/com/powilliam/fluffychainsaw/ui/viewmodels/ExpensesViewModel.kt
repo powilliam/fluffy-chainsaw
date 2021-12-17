@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ExpensesUiState(
+    val isLoading: Boolean = true,
     val expenses: List<Expense> = emptyList(),
     val query: String = "",
     val monthEndingInUtcMilliseconds: Long = 0,
@@ -51,7 +52,7 @@ class ExpensesViewModel @Inject constructor(
                     expenses = expenses,
                     monthEndingInUtcMilliseconds = settings.monthEndingInUtcMilliseconds
                 )
-            }.collect(_uiState::emit)
+            }.collect { uiState -> _uiState.emit(uiState.copy(isLoading = false)) }
         }
     }
 

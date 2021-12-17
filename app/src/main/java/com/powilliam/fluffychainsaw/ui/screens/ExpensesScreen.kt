@@ -1,24 +1,21 @@
 package com.powilliam.fluffychainsaw.ui.screens
 
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AttachMoney
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.powilliam.fluffychainsaw.R
 import com.powilliam.fluffychainsaw.data.entities.Expense
-import com.powilliam.fluffychainsaw.ui.composables.ContainedTextField
-import com.powilliam.fluffychainsaw.ui.composables.ExpensesList
-import com.powilliam.fluffychainsaw.ui.composables.OverviewCard
+import com.powilliam.fluffychainsaw.ui.composables.*
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 import com.powilliam.fluffychainsaw.ui.viewmodels.ExpensesUiState
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun ExpensesScreen(
     modifier: Modifier = Modifier,
@@ -28,6 +25,12 @@ fun ExpensesScreen(
     onNavigateToManageExpense: (Expense?) -> Unit = {}
 ) {
     Scaffold(
+        topBar = {
+            Column {
+                SearchTextField(value = uiState.query, onValueChange = onSearch)
+                Divider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2F))
+            }
+        },
         floatingActionButton = {
             FloatingActionButton(
                 containerColor = MaterialTheme.colorScheme.surface,
@@ -38,31 +41,19 @@ fun ExpensesScreen(
             }
         }
     ) {
-        ExpensesList(
-            modifier.fillMaxSize(),
-            expenses = uiState.filteredExpenses,
-            stickyHeader = {
-                ContainedTextField(
-                    value = uiState.query,
-                    placeholder = stringResource(R.string.expenses_search_placeholder),
-                    shape = RoundedCornerShape(percent = 50),
-                    onValueChange = onSearch,
-                    leading = {
-                        Icon(
-                            imageVector = Icons.Rounded.Search,
-                            contentDescription = null
-                        )
-                    },
-                )
-            },
-            overview = {
-                OverviewCard(
-                    uiState = uiState,
-                    onSelectMonthEnding = onSelectMonthEnding
-                )
+        LoadingTransitionScene(isLoading = uiState.isLoading) {
+            ExpensesList(
+                modifier.fillMaxSize(),
+                expenses = uiState.filteredExpenses,
+                overview = {
+                    OverviewCard(
+                        uiState = uiState,
+                        onSelectMonthEnding = onSelectMonthEnding
+                    )
+                }
+            ) { expense ->
+                onNavigateToManageExpense(expense)
             }
-        ) { expense ->
-            onNavigateToManageExpense(expense)
         }
     }
 }

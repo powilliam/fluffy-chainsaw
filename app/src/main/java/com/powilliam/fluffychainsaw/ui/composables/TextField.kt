@@ -17,10 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.powilliam.fluffychainsaw.R
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 
 @Composable
@@ -136,6 +138,23 @@ private fun ContainedTextFieldDecoration(
     }
 }
 
+@Composable
+fun SearchTextField(value: String, onValueChange: (String) -> Unit) {
+    ContainedTextField(
+        value = value,
+        placeholder = stringResource(R.string.expenses_search_placeholder),
+        shape = RoundedCornerShape(0.dp),
+        tonalElevation = 0.dp,
+        onValueChange = onValueChange,
+        leading = {
+            Icon(
+                imageVector = Icons.Rounded.Search,
+                contentDescription = null
+            )
+        },
+    )
+}
+
 @Preview
 @Composable
 private fun TextFieldPreview() {
@@ -165,7 +184,6 @@ private fun ContainedTextFieldWithLeadingAndPreview() {
             leading = {
                 Icon(imageVector = Icons.Rounded.Search, contentDescription = null)
             },
-            shape = RoundedCornerShape(percent = 50)
         ) {}
     }
 }
@@ -179,7 +197,14 @@ private fun ContainedTextFieldWithLeadingAndWithoutPlaceholderPreview() {
             leading = {
                 Icon(imageVector = Icons.Rounded.Search, contentDescription = null)
             },
-            shape = RoundedCornerShape(percent = 50)
         ) {}
+    }
+}
+
+@Preview
+@Composable
+private fun SearchTextFieldPreview() {
+    FluffyChainsawTheme {
+        SearchTextField(value = "", onValueChange = {})
     }
 }
