@@ -44,7 +44,7 @@ class ExpensesViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val expensesFlow = expensesRepository.getAllExpenses()
+            val expensesFlow = expensesRepository.getAll()
             val settingsFlow = settingsRepository.getSettings()
 
             expensesFlow.combine(settingsFlow) { expenses, settings ->

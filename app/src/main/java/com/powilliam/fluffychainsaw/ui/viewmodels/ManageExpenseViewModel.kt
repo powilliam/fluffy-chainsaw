@@ -47,7 +47,7 @@ class ManageExpenseViewModel @Inject constructor(
     fun onDelete() {
         viewModelScope.launch {
             try {
-                expensesRepository.deleteOneExpense(_uiState.value.expenseId)
+                expensesRepository.deleteOne(_uiState.value.expenseId)
             } catch (exception: Exception) {
             }
         }
@@ -56,7 +56,7 @@ class ManageExpenseViewModel @Inject constructor(
     fun onSetUiStateBasedOnViewMode(viewMode: String?, expenseId: Long?) {
         when {
             isViewingOne(viewMode, expenseId) -> viewModelScope.launch {
-                val expense = expensesRepository.getOneExpense(expenseId!!)
+                val expense = expensesRepository.getOne(expenseId!!)
                 _uiState.emit(
                     ManageExpenseUiState(
                         expenseId = expense.expenseId,
@@ -108,14 +108,14 @@ class ManageExpenseViewModel @Inject constructor(
                 cost = this.cost.toFloat(),
                 type = this.type
             )
-            expensesRepository.insertManyExpenses(expense)
+            expensesRepository.insertMany(expense)
         } catch (exception: Exception) {
         }
     }
 
     private suspend fun ManageExpenseUiState.onUpdate() {
         try {
-            expensesRepository.updateOneExpense(
+            expensesRepository.updateOne(
                 id = this.expenseId,
                 name = this.name,
                 cost = this.cost.toFloat(),
