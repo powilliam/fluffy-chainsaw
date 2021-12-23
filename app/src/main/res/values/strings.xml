@@ -8,6 +8,11 @@
     <string name="expenses_screen_month_ending_is_not_defined">Seems like you don\'t have defined your next month ending date &#129300;</string>
     <string name="expense_type_fixed">Fixed</string>
     <string name="expense_type_variable">Variable</string>
+    <string name="expense_category_no_category">Add category</string>
+    <string name="expense_category_entertainment">Entertainment</string>
+    <string name="expense_category_health">Health</string>
+    <string name="expense_category_food">Food</string>
+    <string name="expense_category_study">Study</string>
     <string name="manage_expense_name_placeholder">Add name</string>
     <string name="manage_expense_cost_placeholder">Add cost</string>
     <string name="manage_expense_type_placeholder">Add type</string>

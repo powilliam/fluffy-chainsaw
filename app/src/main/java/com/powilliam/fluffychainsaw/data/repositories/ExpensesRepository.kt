@@ -2,6 +2,7 @@ package com.powilliam.fluffychainsaw.data.repositories
 
 import com.powilliam.fluffychainsaw.data.datasources.ExpensesLocalDataSource
 import com.powilliam.fluffychainsaw.data.entities.Expense
+import com.powilliam.fluffychainsaw.data.entities.ExpenseCategory
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -9,7 +10,14 @@ import javax.inject.Inject
 interface ExpensesRepository {
     suspend fun getAll(): Flow<List<Expense>>
     suspend fun getOne(expenseId: Long): Expense
-    suspend fun updateOne(id: Long, name: String?, cost: Float?, type: ExpenseType?)
+    suspend fun updateOne(
+        id: Long,
+        name: String?,
+        cost: Float?,
+        type: ExpenseType?,
+        category: ExpenseCategory?
+    )
+
     suspend fun insertMany(vararg expense: Expense)
     suspend fun deleteOne(expenseId: Long)
     suspend fun deleteAllVariableExpenses()
@@ -28,8 +36,9 @@ class ExpensesRepositoryImpl @Inject constructor(
         id: Long,
         name: String?,
         cost: Float?,
-        type: ExpenseType?
-    ) = expensesLocalDataSource.updateOne(id, name, cost, type)
+        type: ExpenseType?,
+        category: ExpenseCategory?
+    ) = expensesLocalDataSource.updateOne(id, name, cost, type, category)
 
     override suspend fun insertMany(vararg expense: Expense) =
         expensesLocalDataSource.insertMany(*expense)

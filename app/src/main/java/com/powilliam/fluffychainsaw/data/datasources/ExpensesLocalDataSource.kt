@@ -2,6 +2,7 @@ package com.powilliam.fluffychainsaw.data.datasources
 
 import com.powilliam.fluffychainsaw.data.daos.ExpenseDao
 import com.powilliam.fluffychainsaw.data.entities.Expense
+import com.powilliam.fluffychainsaw.data.entities.ExpenseCategory
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +13,14 @@ import javax.inject.Inject
 interface ExpensesLocalDataSource {
     suspend fun getAll(): Flow<List<Expense>>
     suspend fun getOne(expenseId: Long): Expense
-    suspend fun updateOne(id: Long, name: String?, cost: Float?, type: ExpenseType?)
+    suspend fun updateOne(
+        id: Long,
+        name: String?,
+        cost: Float?,
+        type: ExpenseType?,
+        category: ExpenseCategory?
+    )
+
     suspend fun insertMany(vararg expense: Expense)
     suspend fun deleteOne(expenseId: Long)
     suspend fun deleteAllByType(type: ExpenseType)
@@ -38,10 +46,11 @@ class ExpensesLocalDataSourceImpl @Inject constructor(
         id: Long,
         name: String?,
         cost: Float?,
-        type: ExpenseType?
+        type: ExpenseType?,
+        category: ExpenseCategory?
     ) {
         withContext(ioDispatcher) {
-            expenseDao.updateOne(id, name, cost, type)
+            expenseDao.updateOne(id, name, cost, type, category)
         }
     }
 

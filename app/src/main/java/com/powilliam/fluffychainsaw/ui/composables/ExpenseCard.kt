@@ -15,13 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.powilliam.fluffychainsaw.data.entities.Expense
+import com.powilliam.fluffychainsaw.data.entities.ExpenseCategory
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 import com.powilliam.fluffychainsaw.ui.utils.currency
-import java.text.NumberFormat
 
 @Composable
 fun ExpenseCard(
@@ -45,21 +46,35 @@ fun ExpenseCard(
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.tertiaryContainer)
                 ) {
-                    Icon(
+                    expense.category.Icon(
                         modifier = modifier.align(Alignment.Center),
-                        imageVector = Icons.Rounded.SportsEsports,
-                        contentDescription = null,
                         tint = MaterialTheme.colorScheme.onTertiaryContainer
                     )
                 }
                 Spacer(modifier.width(16.dp))
                 Column {
-                    Text(text = expense.name, style = MaterialTheme.typography.headlineSmall)
+                    Text(text = expense.name, style = MaterialTheme.typography.bodyLarge)
                     Text(text = currency(expense.cost), style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }
     }
+}
+
+@Composable
+private fun ExpenseCategory?.Icon(
+    modifier: Modifier = Modifier,
+    tint: Color = MaterialTheme.colorScheme.onTertiaryContainer
+) {
+    val imageVector = when (this) {
+        ExpenseCategory.Entertainment -> Icons.Rounded.SportsEsports
+        ExpenseCategory.Health -> Icons.Rounded.HealthAndSafety
+        ExpenseCategory.Food -> Icons.Rounded.Restaurant
+        ExpenseCategory.Study -> Icons.Rounded.School
+        else -> Icons.Rounded.Paid
+    }
+
+    Icon(modifier = modifier, imageVector = imageVector, contentDescription = null, tint = tint)
 }
 
 @Preview

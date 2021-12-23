@@ -1,10 +1,10 @@
 package com.powilliam.fluffychainsaw.data.daos
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.powilliam.fluffychainsaw.data.entities.Expense
+import com.powilliam.fluffychainsaw.data.entities.ExpenseCategory
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
 import kotlinx.coroutines.flow.Flow
 
@@ -16,8 +16,14 @@ interface ExpenseDao {
     @Query("SELECT * FROM Expense WHERE expenseId = :id")
     suspend fun getOne(id: Long): Expense
 
-    @Query("UPDATE Expense SET name = :name, cost = :cost, type = :type WHERE expenseId = :id")
-    suspend fun updateOne(id: Long, name: String?, cost: Float?, type: ExpenseType?)
+    @Query("UPDATE Expense SET name = :name, cost = :cost, type = :type, category = :category WHERE expenseId = :id")
+    suspend fun updateOne(
+        id: Long,
+        name: String?,
+        cost: Float?,
+        type: ExpenseType?,
+        category: ExpenseCategory?
+    )
 
     @Insert
     suspend fun insertMany(vararg expense: Expense)

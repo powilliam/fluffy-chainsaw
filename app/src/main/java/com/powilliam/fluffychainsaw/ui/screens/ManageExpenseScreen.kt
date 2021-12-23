@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.powilliam.fluffychainsaw.ui.theme.FluffyChainsawTheme
 import com.powilliam.fluffychainsaw.R
+import com.powilliam.fluffychainsaw.data.entities.ExpenseCategory
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
 import com.powilliam.fluffychainsaw.data.entities.stringResourceId
 import com.powilliam.fluffychainsaw.ui.composables.*
@@ -28,7 +29,9 @@ fun ManageExpenseScreen(
     onChangeName: (String) -> Unit = {},
     onChangeCost: (String) -> Unit = {},
     onChangeType: (ExpenseType) -> Unit = {},
+    onChangeCategory: (ExpenseCategory?) -> Unit = {},
     onToggleIsSelectingOneType: () -> Unit = {},
+    onToggleIsSelectingOneCategory: () -> Unit = {},
     onDelete: () -> Unit = {},
     onCancel: () -> Unit = {},
     onDone: () -> Unit = {}
@@ -63,6 +66,47 @@ fun ManageExpenseScreen(
                     Text(text = stringResource(R.string.manage_expense_done_button))
                 }
             }
+        )
+    }
+
+    if (uiState.isSelectingOneCategory) {
+        AlertDialog(
+            onDismissRequest = onToggleIsSelectingOneCategory,
+            title = {
+                Text(text = stringResource(R.string.expense_category_no_category))
+            },
+            text = {
+                SingleOptionSelection(
+                    selectedOption = uiState.category,
+                    options = listOf(
+                        Option(
+                            label = stringResource(R.string.expense_category_entertainment),
+                            value = ExpenseCategory.Entertainment
+                        ),
+                        Option(
+                            label = stringResource(R.string.expense_category_health),
+                            value = ExpenseCategory.Health
+                        ),
+                        Option(
+                            label = stringResource(R.string.expense_category_food),
+                            value = ExpenseCategory.Food
+                        ),
+                        Option(
+                            label = stringResource(R.string.expense_category_study),
+                            value = ExpenseCategory.Study
+                        )
+                    ),
+                    onSelectOne = { option ->
+                        val newState = if (uiState.category != option.value) option.value else null
+                        onChangeCategory(newState)
+                    },
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = onToggleIsSelectingOneCategory) {
+                    Text(text = stringResource(R.string.manage_expense_done_button))
+                }
+            },
         )
     }
 
@@ -114,6 +158,11 @@ fun ManageExpenseScreen(
                 icon = {
                     Icon(imageVector = Icons.Rounded.Category, contentDescription = null)
                 },
+                onClick = onToggleIsSelectingOneCategory
+            ) {
+                Text(text = stringResource(uiState.category.stringResourceId()))
+            }
+            ActionLayout(
                 onClick = onToggleIsSelectingOneType
             ) {
                 Text(text = stringResource(uiState.type.stringResourceId()))

@@ -7,6 +7,11 @@
     <string name="expenses_screen_month_ending_is_not_defined">Parece que tu ainda não definiu uma data para o próximo fim de mês &#129300;</string>
     <string name="expense_type_fixed">Fixa</string>
     <string name="expense_type_variable">Variável</string>
+    <string name="expense_category_no_category">Adicionar categoria</string>
+    <string name="expense_category_entertainment">Entretenimento</string>
+    <string name="expense_category_health">Saúde</string>
+    <string name="expense_category_food">Comida</string>
+    <string name="expense_category_study">Estudo</string>
     <string name="manage_expense_name_placeholder">Adicionar nome</string>
     <string name="manage_expense_cost_placeholder">Adicionar custo</string>
     <string name="manage_expense_type_placeholder">Adicionar tipo</string>

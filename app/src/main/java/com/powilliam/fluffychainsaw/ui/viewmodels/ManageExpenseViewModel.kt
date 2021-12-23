@@ -3,6 +3,7 @@ package com.powilliam.fluffychainsaw.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.powilliam.fluffychainsaw.data.entities.Expense
+import com.powilliam.fluffychainsaw.data.entities.ExpenseCategory
 import com.powilliam.fluffychainsaw.data.entities.ExpenseType
 import com.powilliam.fluffychainsaw.data.repositories.ExpensesRepository
 import com.powilliam.fluffychainsaw.ui.constants.ManageExpenseViewMode
@@ -17,8 +18,10 @@ data class ManageExpenseUiState(
     val name: String = "",
     val cost: String = "",
     val type: ExpenseType = ExpenseType.Variable,
+    val category: ExpenseCategory? = null,
     val viewMode: ManageExpenseViewMode = ManageExpenseViewMode.InsertingOne,
-    val isSelectingOneType: Boolean = false
+    val isSelectingOneType: Boolean = false,
+    val isSelectingOneCategory: Boolean = false,
 ) {
     val canSubmit = listOf(name, cost).all { field -> field.isNotEmpty() }
     val canDelete = viewMode == ManageExpenseViewMode.ViewingOne
@@ -63,6 +66,7 @@ class ManageExpenseViewModel @Inject constructor(
                         name = expense.name,
                         cost = "${expense.cost}",
                         type = expense.type,
+                        category = expense.category,
                         viewMode = ManageExpenseViewMode.ViewingOne
                     )
                 )
@@ -89,10 +93,26 @@ class ManageExpenseViewModel @Inject constructor(
         }
     }
 
+    fun onChangeCategory(newValue: ExpenseCategory?) {
+        viewModelScope.launch {
+            with(_uiState.value) {
+                _uiState.emit(copy(category = newValue))
+            }
+        }
+    }
+
     fun onToggleIsSelectingOneType() {
         viewModelScope.launch {
             with(_uiState.value) {
                 _uiState.emit(copy(isSelectingOneType = !isSelectingOneType))
+            }
+        }
+    }
+
+    fun onToggleIsSelectingOneCategory() {
+        viewModelScope.launch {
+            with(_uiState.value) {
+                _uiState.emit(copy(isSelectingOneCategory = !isSelectingOneCategory))
             }
         }
     }
@@ -106,7 +126,8 @@ class ManageExpenseViewModel @Inject constructor(
             val expense = Expense(
                 name = this.name,
                 cost = this.cost.toFloat(),
-                type = this.type
+                type = this.type,
+                category = this.category
             )
             expensesRepository.insertMany(expense)
         } catch (exception: Exception) {
@@ -119,7 +140,8 @@ class ManageExpenseViewModel @Inject constructor(
                 id = this.expenseId,
                 name = this.name,
                 cost = this.cost.toFloat(),
-                type = this.type
+                type = this.type,
+                category = this.category
             )
         } catch (exception: Exception) {
         }
