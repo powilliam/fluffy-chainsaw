@@ -61,12 +61,12 @@ android {
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 
     composeOptions {
@@ -125,10 +125,6 @@ dependencies {
     implementation(Dependencies.AndroidX.WorkManager.kotlinAndCoroutines)
     implementation(Dependencies.AndroidX.Hilt.hiltWork)
     kapt(Dependencies.AndroidX.Hilt.hiltWorkKapt)
-
-    implementation(Dependencies.AndroidX.Emoji2.emoji)
-    implementation(Dependencies.AndroidX.Emoji2.views)
-    implementation(Dependencies.AndroidX.Emoji2.viewsHelper)
 
     testImplementation(Dependencies.junit)
     testImplementation(Dependencies.AndroidX.Room.test)
