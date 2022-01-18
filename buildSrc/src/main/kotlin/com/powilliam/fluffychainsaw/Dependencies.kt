@@ -6,7 +6,7 @@ object Dependencies {
 
     object AndroidX {
         const val core = "androidx.core:core-ktx:1.7.0"
-        const val appCompat = "androidx.appcompat:appcompat:1.4.0"
+        const val appCompat = "androidx.appcompat:appcompat:1.4.1"
         const val test = "androidx.test.ext:junit:1.1.3"
         const val espresso = "androidx.test.espresso:espresso-core:3.4.0"
         const val activityCompose = "androidx.activity:activity-compose:1.4.0"
@@ -17,7 +17,7 @@ object Dependencies {
             const val foundation =
                 "androidx.compose.foundation:foundation:${Versions.composeVersion}"
             const val material = "androidx.compose.material:material:${Versions.composeVersion}"
-            const val material3 = "androidx.compose.material3:material3:1.0.0-alpha01"
+            const val material3 = "androidx.compose.material3:material3:1.0.0-alpha03"
             const val icons =
                 "androidx.compose.material:material-icons-core:${Versions.composeVersion}"
             const val iconsExtended =
@@ -34,14 +34,14 @@ object Dependencies {
             const val plugin =
                 "com.google.dagger:hilt-android-gradle-plugin:${Versions.hiltVersion}"
             const val hilt = "com.google.dagger:hilt-android:${Versions.hiltVersion}"
-            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
+            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-rc01"
             const val kapt = "com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}"
             const val hiltWork = "androidx.hilt:hilt-work:1.0.0"
             const val hiltWorkKapt = "androidx.hilt:hilt-compiler:1.0.0"
         }
 
         object Navigation {
-            const val compose = "androidx.navigation:navigation-compose:2.4.0-beta02"
+            const val compose = "androidx.navigation:navigation-compose:2.4.0-rc01"
         }
 
         object Room {
@@ -57,12 +57,6 @@ object Dependencies {
 
         object WorkManager {
             const val kotlinAndCoroutines = "androidx.work:work-runtime-ktx:${Versions.workVersion}"
-        }
-
-        object Emoji2 {
-            const val emoji = "androidx.emoji2:emoji2:${Versions.emoji2Version}"
-            const val views = "androidx.emoji2:emoji2-views:${Versions.emoji2Version}"
-            const val viewsHelper = "androidx.emoji2:emoji2-views-helper:${Versions.emoji2Version}"
         }
     }
 
